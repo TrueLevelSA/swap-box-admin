@@ -59,7 +59,7 @@ function flattenRoutes(into, node) {
 }
 
 
-export function getPaths(routes) {
+export function pathByName(routes) {
   const out = flattenRoutes([], routes)
   return out.reduce((accu, { name, path }) => {
     accu[name] = path

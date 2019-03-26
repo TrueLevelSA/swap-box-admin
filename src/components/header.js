@@ -4,7 +4,7 @@ import { Box } from 'grommet'
 import styled from 'styled-components'
 
 import { Wrapper } from 'components'
-import { getPaths, routes } from 'routes'
+import { pathByName, routes } from 'routes'
 import { theme } from 'theme'
 
 const SLink = styled(Link)`
@@ -13,7 +13,7 @@ const SLink = styled(Link)`
 `
 
 const Header = () => {
-  const paths = getPaths(routes)
+  const paths = pathByName(routes)
   return (
   <Box tag='header' background='light-2' elevation='xs'  >
     <Wrapper>
