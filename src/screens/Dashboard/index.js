@@ -12,18 +12,21 @@ const SContractInfo = styled('div')`
 `
 
 const Dashboard = ({ route }) => (
-  <>
-    <Box margin={{ vertical: 'medium'}} direction="row" justify="between">
+  <Box pad="medium" fill>
+    <Box
+      margin={{ vertical: 'medium'}}
+      direction="row"
+      justify="between">
       <QrCode address="alsjdalsjd" />
       <ul>
         <li><Currency label="EthBalance" value="100" currency="ETH"/></li>
         <li><Currency label="BaseToken" value="2345" currency="xCHF"/></li>
       </ul>
     </Box>
-    <Box margin={{ vertical: 'medium'}}>
+    <Box margin={{ vertical: 'medium'}} fill>
       { renderRoutes(route.routes) }
     </Box>
-  </>
+  </Box>
 )
 
 export default Dashboard
