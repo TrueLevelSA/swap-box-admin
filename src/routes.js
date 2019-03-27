@@ -6,7 +6,6 @@ import {
   Deploy,
 } from 'screens'
 
-
 /*
   Centralized route definition
   Used with react-router-config

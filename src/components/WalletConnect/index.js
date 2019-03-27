@@ -2,7 +2,6 @@ import React from 'react'
 import { Layer, Button, Box, Icon, Heading, } from 'grommet'
 import styled from 'styled-components'
 
-
 const SIcon = styled('img')`
   width: 50px;
   height: 50px;

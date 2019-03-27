@@ -12,7 +12,7 @@ const SContractInfo = styled('div')`
 `
 
 const Dashboard = ({ route }) => (
-  <Box pad="medium" fill>
+  <>
     <Box
       margin={{ vertical: 'medium'}}
       direction="row"
@@ -26,7 +26,7 @@ const Dashboard = ({ route }) => (
     <Box margin={{ vertical: 'medium'}} fill>
       { renderRoutes(route.routes) }
     </Box>
-  </Box>
+  </>
 )
 
 export default Dashboard

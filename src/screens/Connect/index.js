@@ -22,21 +22,23 @@ const options = [
 ]
 
 export default () => (
-  <Box pad="medium" align="center" justify="center" fill>
-    <Box>
-      <Heading level="2">Connect to a wallet to get started</Heading>
+  <>
+    <Box align="center" justify="center" fill>
+      <Box>
+        <Heading level="2">Connect to a wallet to get started</Heading>
+      </Box>
+      <Box gap="medium">
+        {
+          options.map((wallet, idx) => (
+            <WalletConnect
+              key={`wallet-${idx}`}
+              type={wallet.type}
+              active={wallet.active}
+              onClick={wallet.action}
+            />
+          ))
+        }
+      </Box>
     </Box>
-    <Box gap="medium">
-      {
-        options.map((wallet, idx) => (
-          <WalletConnect
-            key={`wallet-${idx}`}
-            type={wallet.type}
-            active={wallet.active}
-            onClick={wallet.action}
-          />
-        ))
-      }
-    </Box>
-  </Box>
+  </>
 )

@@ -1,6 +1,12 @@
 export const theme = {
   black: '#000',
-  maxWidth: '960px'
+  wrapper: {
+    maxWidth: '42rem',
+  },
+  footer: {
+    height: '3rem'
+  }
+
 }
 
 export const GrommetTheme = {

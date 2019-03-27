@@ -1,8 +1,7 @@
 import React from 'react'
-import styled from 'styled-components'
 import { Box, Heading, Paragraph } from 'grommet'
-import { Button } from 'components'
 
+import { Button } from 'components'
 
 export default () => (
   <Box fill align="center" justify="center">
