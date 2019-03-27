@@ -59,8 +59,8 @@ const AdminPanel = ({ route }) => {
           />
         ))
       }
-      {/*<Modal show={modalShow} close={() => setModalShow(false)} type={dialogType}/>*/}
-      <Modal show={true} close={() => setModalShow(false)} type={DIALOG_TYPE.TRANSFER}/>
+      <Modal show={modalShow} close={() => setModalShow(false)} type={dialogType}/>
+      {/*<Modal show={true} close={() => setModalShow(false)} type={DIALOG_TYPE.TRANSFER}/>*/}
     </Box>
   )
 }

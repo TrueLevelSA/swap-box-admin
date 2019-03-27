@@ -10,7 +10,7 @@ const App = ({ route }) => {
     <Grommet theme={GrommetTheme} full>
       <Box fill>
         <Header />
-        <Box>
+        <Box fill="vertical">
           <Wrapper>
             { renderRoutes(route.routes) }
           </Wrapper>
