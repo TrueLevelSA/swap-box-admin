@@ -14,6 +14,7 @@ const normalSection = ({ title, content, action }) => (
     </Heading>
     <Box
       pad="medium"
+      round="xsmall"
       border={{size: 'small' }}>
       {/*<Heading
         level="4"
@@ -51,6 +52,7 @@ const dangerSection = ({ title, content, action }) => (
     </Heading>
     <Box
       pad="medium"
+      round="xsmall"
       border={{ color: 'status-critical', size: 'small' }}>
       <Heading
         level="4"
@@ -78,10 +80,10 @@ const dangerSection = ({ title, content, action }) => (
   </>
 )
 
-const Section = ({ danger, ...props }) => (
+const Section = ({ isDangerous, ...props }) => (
   <Box>
     {
-      danger
+      isDangerous
       ? dangerSection(props)
       : normalSection(props)
     }

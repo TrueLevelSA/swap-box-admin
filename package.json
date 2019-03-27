@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "grommet": "^2.5.5",
+    "grommet-icons": "^4.2.0",
     "lodash.range": "^3.2.0",
     "normalize.css": "^8.0.1",
     "react": "^16.6.3",
