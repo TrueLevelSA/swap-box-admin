@@ -1,6 +1,7 @@
 export { default as Button } from './button'
 export { default as Currency } from './currency'
 export { default as Form } from './form'
+export { default as Footer } from './footer'
 export { default as Header } from './header'
 export { default as Modal, DIALOG_TYPE } from './Modal'
 export { default as QrCode } from './qrCode'

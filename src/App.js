@@ -7,7 +7,7 @@ import {
   Grommet,
 } from 'grommet'
 
-import { Header } from 'components'
+import { Header, Footer } from 'components'
 import { GrommetTheme, theme } from 'theme'
 
 const Wrapper = ({ children, ...props }) => (
@@ -23,14 +23,14 @@ const SWrapper = styled(Wrapper)`
 export default ({ route }) => (
   <Grommet theme={GrommetTheme} full>
     <Grid fill rows={['auto', 'flex', `${theme.footer.height}`]} gap="xsmall">
-      <Box id="#header" align="center" background="light-3" elevation="xs">
+      <Box id="#header" align="center" background="light-2" elevation="xs">
         <SWrapper pad={{ vertical: "small", horizontal: "medium" }}><Header /></SWrapper>
       </Box>
       <Box id="#main" align="center">
         <SWrapper>{ renderRoutes(route.routes) }</SWrapper>
       </Box>
-      <Box id="#footer" align="center">
-        <SWrapper pad={{ vertical: "small", horizontal: "medium"}}>Footer</SWrapper>
+      <Box id="#footer" align="center" background="light-1">
+        <SWrapper pad={{ vertical: "small", horizontal: "medium"}}><Footer /></SWrapper>
       </Box>
     </Grid>
   </Grommet>

@@ -25,9 +25,11 @@ export default () => (
   <>
     <Box align="center" justify="center" fill>
       <Box>
-        <Heading level="2">Connect to a wallet to get started</Heading>
+        <Heading level="3" textAlign="center">
+          Get started <br/> by connecting one of <br/> the wallets below
+        </Heading>
       </Box>
-      <Box gap="medium">
+      <Box gap="medium" margin={{ top: 'large' }}>
         {
           options.map((wallet, idx) => (
             <WalletConnect

@@ -3,8 +3,8 @@ import { Layer, Button, Box, Icon, Heading, } from 'grommet'
 import styled from 'styled-components'
 
 const SIcon = styled('img')`
-  width: 50px;
-  height: 50px;
+  width: 45px;
+  height: 45px;
 `
 
 const Wallet = ({ type, active, onClick }) => {
@@ -19,13 +19,12 @@ const Wallet = ({ type, active, onClick }) => {
       <Box
         direction="row"
         gap="large"
-        pad={{ vertical: 'medium', horizontal: 'large'}}
-        border={{ size: 'medium' }}
+        pad={{ vertical: 'small', horizontal: 'medium'}}
+        border={{ size: 'small' }}
         align="center"
-        round="xsmall"
+        round="xxsmall"
         width="medium"
-        elevation="xsmall"
-        >
+        elevation="small">
         <SIcon src={icon} />
         <Heading level="3">{name}</Heading>
       </Box>
