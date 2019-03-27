@@ -12,7 +12,7 @@ export const theme = {
 export const GrommetTheme = {
   global: {
     font: {
-      family: 'Roboto',
+      family: 'Lekton, sans-serif',
       size: '16px',
       height: '20px'
     }
