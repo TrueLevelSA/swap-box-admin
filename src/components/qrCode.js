@@ -1,20 +1,19 @@
 import React from 'react'
+import QRCode from 'qrcode.react'
+import { Box } from 'grommet'
 import styled from 'styled-components'
 
-const square = '100px';
-const Container = styled('div')`
-  width: ${square};
-  height: ${square};
-  background-color: red;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
+import { theme } from 'theme'
 
-const QrCode = ({ address }) => (
-  <>
-    <Container>{address}</Container>
-  </>
+const SQRCode = styled(QRCode)``
+
+export default ({ address }) => (
+  <Box border={{ size: 'xsmall', color: 'brand' }} height={`${theme.qrCode.size + 2}px`}>
+    <SQRCode
+      value={address}
+      includeMargin
+      renderAs="svg"
+      size={theme.qrCode.size}
+      />
+  </Box>
 )
-
-export default QrCode

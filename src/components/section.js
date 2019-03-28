@@ -15,7 +15,7 @@ const normalSection = ({ title, content, action }) => (
     <Box
       pad="medium"
       round="xsmall"
-      border={{size: 'small' }}>
+      border={{ size: 'small' }}>
       {/*<Heading
         level="4"
         margin={{ vertical: 'xsmall' }}

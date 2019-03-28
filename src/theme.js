@@ -1,5 +1,8 @@
 export const theme = {
   black: '#000',
+  qrCode: {
+    size: 126,
+  },
   wrapper: {
     maxWidth: '42rem',
   },
