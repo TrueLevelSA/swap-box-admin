@@ -1,3 +1,4 @@
+export { default as EthAddress } from './ethAddress'
 export { default as Button } from './button'
 export { default as Currency } from './currency'
 export { default as Form } from './form'
