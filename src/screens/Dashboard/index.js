@@ -16,7 +16,7 @@ const addr = '0x909f74Ffdc223586d0d30E78016E707B6F5a45E2'
 const Dashboard = ({ route }) => (
   <>
     <Box
-      height={`${theme.qrCode.size + 100}px`}
+      height={`${theme.qrCode.container}px`}
       margin={{ vertical: 'medium'}}
       direction="row"
       justify="between">
