@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "copy-to-clipboard": "^3.0.8",
+    "ethers": "^4.0.27",
     "grommet": "^2.5.5",
     "grommet-icons": "^4.2.0",
     "lodash.range": "^3.2.0",

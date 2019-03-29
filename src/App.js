@@ -1,5 +1,6 @@
-import React from 'react'
-import { renderRoutes } from "react-router-config"
+import React, { Component } from 'react'
+import { renderRoutes } from 'react-router-config'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
 import {
   Box,
@@ -20,18 +21,39 @@ const SWrapper = styled(Wrapper)`
   width: ${theme.wrapper.maxWidth};
 `
 
-export default ({ route }) => (
-  <Grommet theme={GrommetTheme} full>
-    <Grid fill rows={['auto', 'flex', `${theme.footer.height}`]} gap="xsmall">
-      <Box id="#header" align="center" background="light-2" elevation="xs">
-        <SWrapper pad={{ vertical: "small", horizontal: "medium" }}><Header /></SWrapper>
-      </Box>
-      <Box id="#main" align="center">
-        <SWrapper>{ renderRoutes(route.routes) }</SWrapper>
-      </Box>
-      <Box id="#footer" align="center" background="light-1">
-        <SWrapper pad={{ vertical: "small", horizontal: "medium"}}><Footer /></SWrapper>
-      </Box>
-    </Grid>
-  </Grommet>
-)
+class App extends Component {
+
+  render() {
+    const { route, network, address } = this.props
+    return (
+      <Grommet theme={GrommetTheme} full>
+        <Grid fill rows={['auto', 'flex', `${theme.footer.height}`]} gap="xsmall">
+          <Box id="#header" align="center" background="light-2" elevation="xs">
+            <SWrapper pad={{ vertical: "small", horizontal: "medium" }}>
+              <Header network={network} address={address}/>
+            </SWrapper>
+          </Box>
+          <Box id="#main" align="center">
+            <SWrapper>{ renderRoutes(route.routes) }</SWrapper>
+          </Box>
+          <Box id="#footer" align="center" background="light-1">
+            <SWrapper pad={{ vertical: "small", horizontal: "medium"}}><Footer /></SWrapper>
+          </Box>
+        </Grid>
+      </Grommet>
+    )
+  }
+
+}
+
+const mapStateToProps = ({ network }) => ({
+  network: network.name,
+  address: network.address,
+})
+
+const mapDispatchToProps = dispatch => ({})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App)

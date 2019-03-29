@@ -7,14 +7,13 @@ import { BrowserRouter } from 'react-router-dom'
 import { renderRoutes } from "react-router-config"
 import { Provider } from 'react-redux'
 
-
 import 'normalize.css';
 import 'styles.css'
 import { routes } from 'routes'
-
 import { configureStore } from './store'
 import * as serviceWorker from './serviceWorker'
 
+import 'services/web3.service'
 
 ReactDOM.render(
   <Provider store={configureStore()}>

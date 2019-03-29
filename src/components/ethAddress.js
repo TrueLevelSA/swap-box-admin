@@ -4,11 +4,11 @@ import copy from 'copy-to-clipboard';
 import styled from 'styled-components'
 
 const SContainer = styled(Box)`
+  display: inline;
   &:hover {
     background: ${defaultProps.theme.global.colors['light-3']};
   }
 `
-
 const addrLength = 42
 
 const truncateCenter = (address, compact = true) => {

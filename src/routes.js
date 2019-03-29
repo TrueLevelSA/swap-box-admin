@@ -12,13 +12,18 @@ import {
 */
 export const routes = [
   {
-    path: '/',
-    name: 'root',
     component: App,
     routes: [
       {
+        path: '/',
+        name: 'default',
+        exact: true,
+        component: Connect,
+      },
+      {
         path: '/connect',
         name: 'connect',
+        exact: true,
         component: Connect,
       },
       {
@@ -29,11 +34,13 @@ export const routes = [
           {
             path: '/dashboard/deploy',
             name: 'deploy',
+            exact: true,
             component: Deploy,
           },
           {
             path: '/dashboard/admin',
             name: 'admin',
+            exact: true,
             component: AdminPanel,
           }
         ]

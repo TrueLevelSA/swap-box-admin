@@ -1,0 +1,17 @@
+{
+  "chain": {
+    "kovan": {
+      "fromBlock": 5216602,
+      "chart": false,
+
+    },
+    "main": {
+      "fromBlock": 4752013,
+
+    },
+    "ropsten": {
+      "fromBlock": 4752013,
+
+    }
+  }
+}
