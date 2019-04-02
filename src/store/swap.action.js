@@ -4,17 +4,19 @@ import { initNetworkAction } from './network.action'
 export function swapInit() {
   return async (dispatch, getState) => {
     dispatch({ type: 'SWAP_INIT_START' })
-
-    const { provider, name } = getState().network
-    const signer = provider.getSigner()
-    const factory = new SwapService(signer, name)
-    dispatch({
-      type: 'SWAP_INIT_SUCCESS',
-      payload: {
-        factory,
-        signer,
-      }
-    })
+    const { provider, name: networkName, signer } = getState().network
+    try {
+      const factory = new SwapService(signer, networkName)
+      dispatch({
+        type: 'SWAP_INIT_SUCCESS',
+        payload: {
+          factory,
+          signer,
+        }
+      })
+    } catch (e) {
+      throw new Error(e)
+    }
   }
 }
 
@@ -42,21 +44,21 @@ export function deploy() {
 
 export function getContract() {
   return async (dispatch, getState) => {
-    dispatch({ type: 'SWAP_CONNECT_START' })
+    dispatch({ type: 'SWAP_ATTACH_START' })
     const { factory } = getState().contract
-
     try {
       const contract = await factory.attach()
-      console.log('CONTRACT', contract, factory)
+      const address = contract.address
       dispatch({
-        type: 'SWAP_CONNECT_SUCCESS',
+        type: 'SWAP_ATTACH_SUCCESS',
         payload: {
-          contract
+          contract,
+          address
         }
       })
     } catch (err) {
       dispatch({
-        type: 'SWAP_CONNECT_FAILURE',
+        type: 'SWAP_ATTACH_FAILURE',
         payload: {}
       })
       throw new Error(err)

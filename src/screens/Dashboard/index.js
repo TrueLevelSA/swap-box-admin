@@ -14,12 +14,12 @@ class Dashboard extends Component {
     if (!authenticated) {
       await initNetworkAction('METAMASK')
     }
-    await contractInit().then(() => console.log('INIT'))
-    // await getContract().then((e) => console.log('CONTRACT', e))
+    await contractInit()
+    await getContract()
   }
 
   render() {
-    const { route, contractAddress: address = '' } = this.props
+    const { route, contractAddress = '' } = this.props
     return (
       <>
         <Box
@@ -28,8 +28,8 @@ class Dashboard extends Component {
         direction="row"
         justify="between">
           <Box>
-            <QrCode address={address} />
-            <EthAddress address={address} />
+            <QrCode address={contractAddress} />
+            <EthAddress address={contractAddress} />
           </Box>
           <Box>
             <Currency color="dark-1" label="EthBalance" value="100.0002" currency="ETH" size="large"/>
@@ -45,14 +45,14 @@ class Dashboard extends Component {
 
 }
 
-const mapStateToProps = ({ network }) => ({
-  contractAddress: network.address // @TODO currently displays account. Should be contract.
+const mapStateToProps = ({ contract }) => ({
+  contractAddress: contract.address // @TODO currently displays account. Should be contract.
 })
 
 const mapDispatchToProps = dispatch => ({
   contractInit: () => dispatch(swapInit()),
   getContract: () => dispatch(getContract()),
-  initNetworkAction: (type) => dispatch(initNetworkAction(type, window.web3))
+  initNetworkAction: (type) => dispatch(initNetworkAction(type))
 })
 
 export default connect(

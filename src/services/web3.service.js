@@ -7,23 +7,27 @@ import { ethers } from 'ethers'
 */
 
 export default class Web3Provider {
-  constructor(injectedWeb3) {
-    if (window.web3 !== undefined) {
-      this.provider = new ethers.providers.Web3Provider(window.web3.currentProvider)
-      console.debug('Connected to', this.provider)
-    } else {
-      console.debug('window.web3 is undefined')
-    }
-  }
+  constructor() {}
 
-  async init() {
-    try {
-      await this.provider._web3Provider.enable()
-      return this
-    } catch(err) {
-      throw new Error('Auth failure', err)
-      return this
+  async init(web3) {
+    if (web3 !== undefined) {
+      this.provider = new ethers.providers.Web3Provider(web3.currentProvider)
+
+      try {
+        await this.provider._web3Provider.enable()
+        this.signer = this.provider.getSigner()
+        console.debug('Connected to', this.provider)
+        return this
+      } catch(err) {
+        throw new Error('Auth failure', err)
+        return this
+      }
+
+
+    } else {
+      console.debug('web3 is undefined')
     }
+
   }
 
   authenticate() {

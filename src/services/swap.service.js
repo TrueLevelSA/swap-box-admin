@@ -4,7 +4,10 @@ import settings from './settings.json'
 
 class SwapService {
   constructor(signer, networkName) {
-    this.contract = new ethers.ContractFactory(source.abi, source.bytecode, signer)
+    this.contract = new ethers
+      .ContractFactory(source.abi, source.bytecode)
+      .connect(signer)
+
     this.chain = settings.chain['main'] // @TODO should be networkName
   }
 
@@ -17,8 +20,8 @@ class SwapService {
   }
 
   attach(address) {
-    address = settings.chain['ropsten'].demoContract
-    return this.contract.connect(address)
+    this.address = settings.chain['ropsten'].demoContract
+    return this.contract.attach(this.address)
   }
 
   connect(address) {

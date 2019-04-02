@@ -70,7 +70,7 @@ const mapStateToProps = ({ network }) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  initNetworkAction: (type) => dispatch(initNetworkAction(type, window.web3))
+  initNetworkAction: (type) => dispatch(initNetworkAction(type))
 })
 
 export default connect(

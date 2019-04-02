@@ -22,26 +22,28 @@ export default (state = initialState, { type, payload }) => {
       return state
     }
     case 'SWAP_DEPLOY_SUCCESS': {
-      const { contract } = payload
+      const { contract, address} = payload
       return {
         ...state,
         contract,
+        address,
       }
     }
     case 'SWAP_DEPLOY_FAILURE': {
       return state
     }
-    case 'SWAP_CONNECT_START': {
+    case 'SWAP_ATTACH_START': {
       return state
     }
-    case 'SWAP_CONNECT_SUCCESS': {
-      const { contract } = payload
+    case 'SWAP_ATTACH_SUCCESS': {
+      const { contract, address } = payload
       return {
         ...state,
         contract,
+        address,
       }
     }
-    case 'SWAP_CONNECT_FAILURE': {
+    case 'SWAP_ATTACH_FAILURE': {
       return state
     }
     case 'SWAP_TRANSFER_START': {
