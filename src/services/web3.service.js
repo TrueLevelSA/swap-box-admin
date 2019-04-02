@@ -38,6 +38,10 @@ export default class Web3Provider {
     return this.provider
   }
 
+  getSigner() {
+    return this.provider.getSigner()
+  }
+
   getAccount() {
     return this.provider._web3Provider.selectedAddress
   }

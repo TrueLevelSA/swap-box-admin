@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
 import { Box } from 'grommet'
 
 import { Form, Section, Modal } from 'components'
@@ -45,7 +46,6 @@ const AdminPanel = ({ route }) => {
     }
   ]
 
-
   return (
     <Box gap="medium">
       {
@@ -64,4 +64,16 @@ const AdminPanel = ({ route }) => {
     </Box>
   )
 }
-export default AdminPanel
+
+const mapStateToProps = ({ network }) => ({
+  authenticated: network.status === 'authenticated'
+})
+
+const mapDispatchToProps = dispatch => ({
+  // connect: (addr) => dispatch(connect(addr))
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminPanel)

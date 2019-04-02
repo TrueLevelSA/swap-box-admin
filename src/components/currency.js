@@ -2,12 +2,10 @@ import React from 'react'
 import { Heading, Box } from 'grommet'
 import styled from 'styled-components'
 
-const SValue = styled(Heading)`
-
-`
+const SValue = styled(Heading)``
 
 const getLevel = size => (
-  size == 'large' ? 2 : 3
+  size === 'large' ? 2 : 3
 )
 
 const formatValue = value => (

@@ -1,10 +1,9 @@
 
 const initialState = {
   provider: {},
-  network: {
-    name: '',
-    address: '',
-  }
+  name: '',
+  address: '',
+  status: false
 }
 
 export default (state = initialState, { type, payload }) => {

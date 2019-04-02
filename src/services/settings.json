@@ -2,16 +2,26 @@
   "chain": {
     "kovan": {
       "fromBlock": 5216602,
-      "chart": false,
-
+      "chart": false
     },
     "main": {
       "fromBlock": 4752013,
-
+      "ATOLA_BASE_CURRENCY": "0xb4272071ecadd69d933adcd19ca99fe80664fc08",
+      "ATOLA_BASE_EXCHANGE": "0x8de0d002dc83478f479dc31f76cb0a8aa7ccea17",
+      "uniswapFactoryAddress": "0xc0a47dFe034B400B47bDaD5FecDa2621de6c4d95"
     },
     "ropsten": {
       "fromBlock": 4752013,
-
+      "ATOLA_BASE_CURRENCY": "",
+      "ATOLA_BASE_EXCHANGE": "",
+      "uniswapFactoryAddress": "",
+      "demoContract": "0x29027d776990c7367efbe0db6184f8e2eca631cd"
+    },
+    "rinkeby": {
+      "fromBlock": 4752013,
+      "ATOLA_BASE_CURRENCY": "",
+      "ATOLA_BASE_EXCHANGE": "",
+      "uniswapFactoryAddress": "0xf5D915570BC477f9B8D6C0E980aA81757A3AaC36"
     }
   }
 }
