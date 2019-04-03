@@ -47,7 +47,7 @@ const AdminPanel = ({ route }) => {
   ]
 
   return (
-    <Box gap="medium">
+    <Box gap="small">
       {
         sections.map((section, index) => (
           <Section

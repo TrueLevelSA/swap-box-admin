@@ -16,12 +16,6 @@ const normalSection = ({ title, content, action }) => (
       pad="medium"
       round="xsmall"
       border={{ size: 'small' }}>
-      {/*<Heading
-        level="4"
-        margin={{ vertical: 'xsmall' }}
-        alignSelf="start">
-        {title}
-      </Heading>*/}
       <Box
         direction="row"
         justify="between"

@@ -23,7 +23,7 @@ class Dashboard extends Component {
       <>
         <Box
         height={`${theme.qrCode.container}px`}
-        margin={{ vertical: 'medium'}}
+        margin={{ vertical: 'small'}}
         direction="row"
         justify="between">
           <Box>
@@ -35,7 +35,7 @@ class Dashboard extends Component {
             <Currency color="dark-3" label="BaseToken" value="2345.0003" currency="xCHF"/>
           </Box>
         </Box>
-        <Box margin={{ vertical: 'medium'}} fill>
+        <Box margin={{ vertical: 'small'}} fill>
           { renderRoutes(route.routes) }
         </Box>
       </>
