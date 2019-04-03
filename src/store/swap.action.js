@@ -100,12 +100,12 @@ export function editBTM(btm) {
   }
 }
 
-export function withdraw() {
+export function withdraw(amount, currency) {
   return async (dispatch, getState) => {
     dispatch({ type: 'SWAP_WITHDRAW_START' })
 
     const { service } = getState().contract
-    console.log('WITHDRAW', service)
+    console.log('WITHDRAW', amount, currency)
     try {
       dispatch({ type: 'SWAP_WITHDRAW_SUCCESS' })
     } catch (e) {

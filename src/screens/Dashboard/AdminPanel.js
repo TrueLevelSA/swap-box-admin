@@ -16,8 +16,8 @@ const AdminPanel = ({ route }) => {
       action: {
         label: 'Add BTM',
         onClick: () => {
-          setModalShow(true)
           setDialogType(DIALOG_TYPE.BTM_ADD)
+          setModalShow(true)
         }
       },
     },
@@ -27,8 +27,8 @@ const AdminPanel = ({ route }) => {
       action: {
         label: 'Withdraw',
         onClick: () => {
-          setModalShow(true)
           setDialogType(DIALOG_TYPE.WITHDRAW)
+          setModalShow(true)
         }
       },
     },
@@ -39,8 +39,8 @@ const AdminPanel = ({ route }) => {
       action: {
         label: 'Transfer',
         onClick: () => {
-          setModalShow(true)
           setDialogType(DIALOG_TYPE.TRANSFER)
+          setModalShow(true)
         }
       },
     }
@@ -59,11 +59,14 @@ const AdminPanel = ({ route }) => {
           />
         ))
       }
-      <Modal
-        show={modalShow}
+      {/*<Modal
         close={() => setModalShow(false)}
-        type={dialogType}/>
-      {/*<Modal show={true} close={() => setModalShow(false)} type={DIALOG_TYPE.TRANSFER}/>*/}
+        show={modalShow}
+        type={dialogType}/>*/}
+      <Modal
+        close={() => setModalShow(false)}
+        show={true}
+        type={DIALOG_TYPE.WITHDRAW} />
     </Box>
   )
 }

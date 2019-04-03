@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, defaultProps } from 'grommet'
+import { Box, Text, defaultProps } from 'grommet'
 import copy from 'copy-to-clipboard';
 import styled from 'styled-components'
 
@@ -23,8 +23,8 @@ const truncateCenter = (address, compact = true) => {
   return displayAddress
 }
 
-export default ({ address }) => (
-  <SContainer pad='xsmall' round="xsmall" onClick={() => copy(address)}>
-    <span>{truncateCenter(address)}</span>
+export default ({ address = '', bold = false, inline = false }) => (
+  <SContainer pad={inline ? 'small' : 'xsmall'} round="xsmall" onClick={() => copy(address)}>
+    <Text weight={bold ? 'bold' : 'normal' } >{truncateCenter(address)}</Text>
   </SContainer>
 )
