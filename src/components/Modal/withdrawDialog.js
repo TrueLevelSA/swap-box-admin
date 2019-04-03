@@ -18,9 +18,7 @@ const SFormField = styled(FormField)`
 `
 function WithDrawDialog({ close, account, onSubmit }) {
 
-  const withdrawFunds = ({ value }) => {
-    onSubmit(value.amount, value.currency)
-  }
+  const withdrawFunds = ({ value }) => onSubmit(value)
 
   return (
     <>
@@ -82,7 +80,7 @@ const mapStateToProps = ({ network }) => ({
 // @TODO this component should be presentational
 // Once modal is abstracted we should no longer need a store.
 const mapDispatchToProps = dispatch => ({
-  onSubmit: (amount, currency) => dispatch(withdraw(amount, currency))
+  onSubmit: (value) => dispatch(withdraw(value))
 })
 
 export default connect(

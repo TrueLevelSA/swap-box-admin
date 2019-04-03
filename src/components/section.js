@@ -18,18 +18,21 @@ const normalSection = ({ title, content, action }) => (
       border={{ size: 'small' }}>
       <Box
         direction="row"
+        align="center"
         justify="between"
-        align="center">
-        <Text
-          margin={{ vertical: 'xsmall' }}>
-          {content}
-        </Text>
-        <Button
-          hoverIndicator
-          label={action.label}
-          onClick={action.onClick}
-          margin={{ horizontal: 'medium' }}
-        />
+        gap="small">
+        <Box>
+          <Text margin={{ vertical: 'xsmall' }}>
+            {content}
+          </Text>
+        </Box>
+        <Box width="250px">
+          <Button
+            fill
+            hoverIndicator
+            label={action.label}
+            onClick={action.onClick} />
+        </Box>
       </Box>
     </Box>
   </>
@@ -57,18 +60,21 @@ const dangerSection = ({ title, content, action: { onClick, label } }) => (
       <Box
         direction="row"
         justify="between"
-        align="center">
-        <Text
-          margin={{ vertical: 'xsmall' }}>
-          {content}
-        </Text>
-        <Button
-          hoverIndicator
-          color="status-critical"
-          label={label}
-          onClick={onClick}
-          margin={{ horizontal: 'medium' }}
-        />
+        align="center"
+        gap="small">
+        <Box>
+          <Text margin={{ vertical: 'xsmall' }}>
+            {content}
+          </Text>
+        </Box>
+        <Box width="150px">
+          <Button
+            fill
+            hoverIndicator
+            color="status-critical"
+            label={label}
+            onClick={onClick}/>
+        </Box>
       </Box>
     </Box>
   </>

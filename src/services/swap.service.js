@@ -62,9 +62,29 @@ class SwapService {
   async transferOwnership(receiver) {
     const addr = ethers.utils.getAddress(receiver)
     try {
-      this.instance.transferOwnership(receiver)
+      await this.instance.transferOwnership(receiver)
     } finally {
       return this
+    }
+  }
+
+  async addBTM(btm) {
+    const address = ethers.utils.getAddress(btm)
+    try {
+      await this.instance.addMachine(address)
+    } finally {
+      return this
+    }
+  } 
+
+  async withdraw(amount, currency) {
+    amount = ethers.utils.bigNumberify(amount).toHexString()
+    switch(currency) {
+      case 'ETH':
+        return this.instance.withdrawEth(amount)
+      case 'XCHF':
+        const token = ethers.utils.getAddress(this.chain.ATOLA_BASE_CURRENCY)
+        return this.instance.withdrawTokens(token, amount)
     }
   }
 

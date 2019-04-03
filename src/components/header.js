@@ -4,7 +4,6 @@ import { Box, Text, Heading } from 'grommet'
 import styled from 'styled-components'
 
 import { EthAddress } from 'components'
-import { pathByName, routes } from 'routes'
 import { theme } from 'theme'
 
 const SLink = styled(Link)`
@@ -13,16 +12,11 @@ const SLink = styled(Link)`
 `
 
 export default ({ network, address }) => {
-  const paths = pathByName(routes)
+
   return (
     <Box direction="row" align="center" justify="between">
       <Box justify="center">
         <Heading level={2} margin={{ vertical: "small"}}><SLink to="/">SwapBox</SLink></Heading>
-      </Box>
-      <Box direction="row" gap="xsmall">
-        <Link to={paths.deploy}>Deploy</Link>
-        <Link to={paths.admin}>Admin</Link>
-        <Link to={paths.connect}>Connect</Link>
       </Box>
       {
         network && (

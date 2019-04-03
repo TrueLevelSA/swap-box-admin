@@ -73,10 +73,10 @@ export function getContract(address) {
 export function addBTM(btm) {
   return async (dispatch, getState) => {
     dispatch({ type: 'SWAP_ADD_START' })
-
     const { service } = getState().contract
     console.log('ADD', service)
     try {
+      await service.addBTM(btm)
       dispatch({ type: 'SWAP_ADD_SUCCESS' })
     } catch (e) {
 
@@ -88,28 +88,25 @@ export function addBTM(btm) {
 export function editBTM(btm) {
   return async (dispatch, getState) => {
     dispatch({ type: 'SWAP_EDIT_START' })
-
     const { service } = getState().contract
     console.log('EDIT', service)
     try {
       dispatch({ type: 'SWAP_EDIT_SUCCESS' })
     } catch (e) {
-
       dispatch({ type: 'SWAP_EDIT_FAILURE' })
     }
   }
 }
 
-export function withdraw(amount, currency) {
+export function withdraw({ amount, currency }) {
   return async (dispatch, getState) => {
     dispatch({ type: 'SWAP_WITHDRAW_START' })
-
     const { service } = getState().contract
-    console.log('WITHDRAW', amount, currency)
     try {
+      await service.withdraw(amount, currency)
       dispatch({ type: 'SWAP_WITHDRAW_SUCCESS' })
     } catch (e) {
-
+      throw new Error(e)
       dispatch({ type: 'SWAP_WITHDRAW_FAILURE' })
     }
   }

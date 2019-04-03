@@ -47,10 +47,12 @@ function BtmAddDialog({ close, onSubmit }) {
                 <SFormField
                   name="buyerFee"
                   label="Buyer Fee %"
+                  type="number"
                   placeholder="0.00"/>
                 <SFormField
                   name="sellerFee"
                   label="Seller Fee %"
+                  type="number"
                   placeholder="0.00" />
               </Box>
               <Box direction="row" justify="end">
