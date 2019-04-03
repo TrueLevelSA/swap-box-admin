@@ -23,8 +23,8 @@ const truncateCenter = (address, compact = true) => {
   return displayAddress
 }
 
-export default ({ address = '', bold = false, inline = false }) => (
+export default ({ address = '', bold = false, inline = false, size = 'medium' }) => (
   <SContainer pad={inline ? 'small' : 'xsmall'} round="xsmall" onClick={() => copy(address)}>
-    <Text weight={bold ? 'bold' : 'normal' } >{truncateCenter(address)}</Text>
+    <Text size={size} weight={bold ? 'bold' : 'normal' } >{truncateCenter(address)}</Text>
   </SContainer>
 )

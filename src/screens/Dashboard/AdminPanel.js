@@ -59,14 +59,14 @@ const AdminPanel = ({ route }) => {
           />
         ))
       }
-      {/*<Modal
-        close={() => setModalShow(false)}
-        show={modalShow}
-        type={dialogType}/>*/}
       <Modal
         close={() => setModalShow(false)}
+        show={modalShow}
+        type={dialogType}/>
+      {/*<Modal
+        close={() => setModalShow(false)}
         show={true}
-        type={DIALOG_TYPE.BTM_ADD} />
+        type={DIALOG_TYPE.BTM_ADD} />*/}
     </Box>
   )
 }

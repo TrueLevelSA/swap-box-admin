@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Box, Heading, Paragraph } from 'grommet'
+import { Box, Heading, Text } from 'grommet'
 
 import { Button } from 'components'
 
@@ -26,10 +26,10 @@ const normalSection = ({ title, content, action }) => (
         direction="row"
         justify="between"
         align="center">
-        <Paragraph
+        <Text
           margin={{ vertical: 'xsmall' }}>
           {content}
-        </Paragraph>
+        </Text>
         <Button
           hoverIndicator
           label={action.label}
@@ -64,10 +64,10 @@ const dangerSection = ({ title, content, action: { onClick, label } }) => (
         direction="row"
         justify="between"
         align="center">
-        <Paragraph
+        <Text
           margin={{ vertical: 'xsmall' }}>
           {content}
-        </Paragraph>
+        </Text>
         <Button
           hoverIndicator
           color="status-critical"
