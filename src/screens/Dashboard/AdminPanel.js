@@ -66,7 +66,7 @@ const AdminPanel = ({ route }) => {
       <Modal
         close={() => setModalShow(false)}
         show={true}
-        type={DIALOG_TYPE.WITHDRAW} />
+        type={DIALOG_TYPE.BTM_ADD} />
     </Box>
   )
 }
