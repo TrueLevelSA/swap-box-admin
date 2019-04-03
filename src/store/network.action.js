@@ -5,9 +5,9 @@ export function initNetworkAction(type) {
     if (type === 'METAMASK') {
       try {
         const provider = await new Web3Provider().init(window.web3)
-        const address = provider.getAccount()
-        const networkName = provider.getNetwork()
         const signer = provider.getSigner()
+        const networkName = provider.getNetwork()
+        const address = await signer.getAddress()
         dispatch({
           type: 'AUTH_SUCCESS',
           payload: {

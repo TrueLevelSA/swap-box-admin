@@ -5,17 +5,16 @@ import { Box } from 'grommet'
 
 import { theme } from 'theme'
 import { EthAddress, QrCode, Currency } from 'components'
-import { swapInit, getContract } from 'store/swap.action'
+import { swapInit } from 'store/swap.action'
 import { initNetworkAction } from 'store/network.action'
 
 class Dashboard extends Component {
   async componentDidMount() {
-    const { authenticated, initNetworkAction, contractInit, getContract } = this.props
+    const { authenticated, initNetworkAction, contractInit } = this.props
     if (!authenticated) {
       await initNetworkAction('METAMASK')
     }
     await contractInit()
-    await getContract()
   }
 
   render() {
@@ -51,7 +50,6 @@ const mapStateToProps = ({ contract }) => ({
 
 const mapDispatchToProps = dispatch => ({
   contractInit: () => dispatch(swapInit()),
-  getContract: () => dispatch(getContract()),
   initNetworkAction: (type) => dispatch(initNetworkAction(type))
 })
 

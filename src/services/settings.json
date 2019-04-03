@@ -23,5 +23,8 @@
       "ATOLA_BASE_EXCHANGE": "",
       "uniswapFactoryAddress": "0xf5D915570BC477f9B8D6C0E980aA81757A3AaC36"
     }
+  },
+  "test": {
+    "account": "0xAd8fD699dFa61BF92D660A2eCD05ba612B37c0F7"
   }
 }

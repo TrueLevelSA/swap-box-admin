@@ -33,7 +33,7 @@ const normalSection = ({ title, content, action }) => (
         <Button
           hoverIndicator
           label={action.label}
-          onClick={action.onSubmit}
+          onClick={action.onClick}
           margin={{ horizontal: 'medium' }}
         />
       </Box>
@@ -42,7 +42,7 @@ const normalSection = ({ title, content, action }) => (
 )
 
 
-const dangerSection = ({ title, content, action }) => (
+const dangerSection = ({ title, content, action: { onClick, label } }) => (
   <>
     <Heading
       level="3"
@@ -71,8 +71,8 @@ const dangerSection = ({ title, content, action }) => (
         <Button
           hoverIndicator
           color="status-critical"
-          label={action.label}
-          onClick={action.onSubmit}
+          label={label}
+          onClick={onClick}
           margin={{ horizontal: 'medium' }}
         />
       </Box>

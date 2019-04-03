@@ -47,6 +47,7 @@ export default class Web3Provider {
   }
 
   getAccount() {
+    // Alternative is await signer.getAddress()
     return this.provider._web3Provider.selectedAddress
   }
 }

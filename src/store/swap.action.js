@@ -4,18 +4,26 @@ import { initNetworkAction } from './network.action'
 export function swapInit() {
   return async (dispatch, getState) => {
     dispatch({ type: 'SWAP_INIT_START' })
-    const { provider, name: networkName, signer } = getState().network
+    const { address, name: networkName, signer } = getState().network
     try {
-      const factory = new SwapService(signer, networkName)
+      const service = new SwapService(signer, address, networkName)
+      await service.findDeployedContractAddress()
       dispatch({
         type: 'SWAP_INIT_SUCCESS',
         payload: {
-          factory,
+          service,
           signer,
         }
       })
+      // @TODO getContract relies on service in store.
+      // Remove race condition.
+      if (service.hasContract) {
+        console.log('Found')
+        dispatch(getContract(service.lastestContractAddress()))
+      }
     } catch (e) {
       throw new Error(e)
+      dispatch({ type: 'SWAP_INIT_FAILURE' })
     }
   }
 }
@@ -23,13 +31,13 @@ export function swapInit() {
 export function deploy() {
   return async (dispatch, getState) => {
     dispatch({ type: 'SWAP_DEPLOY_START' })
-    const { factory } = getState().contract
+    const { service } = getState().contract
     try {
-      const contract = await factory.deploy()
+      const deployed = await service.deploy()
       dispatch({
         type: 'SWAP_DEPLOY_SUCCESS',
         payload: {
-          contract,
+          address: deployed.address
         }
       })
     } catch (err) {
@@ -42,25 +50,20 @@ export function deploy() {
   }
 }
 
-export function getContract() {
+export function getContract(address) {
   return async (dispatch, getState) => {
     dispatch({ type: 'SWAP_ATTACH_START' })
-    const { factory } = getState().contract
+    const { service } = getState().contract
     try {
-      const contract = await factory.attach()
-      const address = contract.address
+      const deployed = await service.attach(address)
       dispatch({
         type: 'SWAP_ATTACH_SUCCESS',
         payload: {
-          contract,
-          address
+          address: deployed.address
         }
       })
     } catch (err) {
-      dispatch({
-        type: 'SWAP_ATTACH_FAILURE',
-        payload: {}
-      })
+      dispatch({ type: 'SWAP_ATTACH_FAILURE' })
       throw new Error(err)
     }
   }
@@ -71,8 +74,8 @@ export function addBTM(btm) {
   return async (dispatch, getState) => {
     dispatch({ type: 'SWAP_ADD_START' })
 
-    const contract = getState().contract
-    console.log('ADD', contract)
+    const { service } = getState().contract
+    console.log('ADD', service)
     try {
       dispatch({ type: 'SWAP_ADD_SUCCESS' })
     } catch (e) {
@@ -86,8 +89,8 @@ export function editBTM(btm) {
   return async (dispatch, getState) => {
     dispatch({ type: 'SWAP_EDIT_START' })
 
-    const contract = getState().contract
-    console.log('EDIT', contract)
+    const { service } = getState().contract
+    console.log('EDIT', service)
     try {
       dispatch({ type: 'SWAP_EDIT_SUCCESS' })
     } catch (e) {
@@ -101,8 +104,8 @@ export function withdraw() {
   return async (dispatch, getState) => {
     dispatch({ type: 'SWAP_WITHDRAW_START' })
 
-    const contract = getState().contract
-    console.log('WITHDRAW')
+    const { service } = getState().contract
+    console.log('WITHDRAW', service)
     try {
       dispatch({ type: 'SWAP_WITHDRAW_SUCCESS' })
     } catch (e) {
@@ -112,17 +115,18 @@ export function withdraw() {
   }
 }
 
-export function transfer() {
+export function transferOwnership(owner) {
   return async (dispatch, getState) => {
     dispatch({ type: 'SWAP_TRANSFER_START' })
-
-    const contract = getState().contract
-    console.log('TRANSFER')
+    const { service } = getState().contract
+    console.log('TRANSFER', service)
     try {
+      await service.transferOwnership(owner).then(console.log)
+
       dispatch({ type: 'SWAP_TRANSFER_SUCCESS' })
     } catch (e) {
-
       dispatch({ type: 'SWAP_TRANSFER_FAILURE' })
+      throw new Error(e)
     }
   }
 }

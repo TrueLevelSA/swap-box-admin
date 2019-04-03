@@ -1,6 +1,6 @@
 
 const initialState = {
-  factory: {},
+  service: {},
   contract: {},
   signer: {}
 }
@@ -11,10 +11,10 @@ export default (state = initialState, { type, payload }) => {
       return state
     }
     case 'SWAP_INIT_SUCCESS': {
-      const { factory, signer } = payload
+      const { service, signer } = payload
       return {
         ...state,
-        factory,
+        service,
         signer,
       }
     }
@@ -25,7 +25,6 @@ export default (state = initialState, { type, payload }) => {
       const { contract, address} = payload
       return {
         ...state,
-        contract,
         address,
       }
     }
@@ -39,7 +38,6 @@ export default (state = initialState, { type, payload }) => {
       const { contract, address } = payload
       return {
         ...state,
-        contract,
         address,
       }
     }

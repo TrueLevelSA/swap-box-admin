@@ -15,7 +15,7 @@ const AdminPanel = ({ route }) => {
       content: 'Add BTMs to your contract, activate or deactive a BTM or change its fee',
       action: {
         label: 'Add BTM',
-        onSubmit: () => {
+        onClick: () => {
           setModalShow(true)
           setDialogType(DIALOG_TYPE.BTM_ADD)
         }
@@ -26,7 +26,7 @@ const AdminPanel = ({ route }) => {
       content: 'Withdraw balance from the contract. The corresponding value will be transfered to the current owner',
       action: {
         label: 'Withdraw',
-        onSubmit: () => {
+        onClick: () => {
           setModalShow(true)
           setDialogType(DIALOG_TYPE.WITHDRAW)
         }
@@ -38,7 +38,7 @@ const AdminPanel = ({ route }) => {
       isDangerous: true,
       action: {
         label: 'Transfer',
-        onSubmit: () => {
+        onClick: () => {
           setModalShow(true)
           setDialogType(DIALOG_TYPE.TRANSFER)
         }
@@ -59,7 +59,10 @@ const AdminPanel = ({ route }) => {
           />
         ))
       }
-      <Modal show={modalShow} close={() => setModalShow(false)} type={dialogType}/>
+      <Modal
+        show={modalShow}
+        close={() => setModalShow(false)}
+        type={dialogType}/>
       {/*<Modal show={true} close={() => setModalShow(false)} type={DIALOG_TYPE.TRANSFER}/>*/}
     </Box>
   )
