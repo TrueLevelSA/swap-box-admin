@@ -43,7 +43,7 @@ class Connect extends Component {
         <Box align="center" justify="center" fill>
           <Box>
             <Heading level="3" textAlign="center">
-              Get started <br/> by connecting one of <br/> the wallets below
+              Get started <br/> by connecting one of <br/> the wallets below.
             </Heading>
           </Box>
           <Box gap="medium" margin={{ top: 'large' }}>

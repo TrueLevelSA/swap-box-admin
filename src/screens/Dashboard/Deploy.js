@@ -11,7 +11,7 @@ function Deploy({ deploy, authenticated, initNetworkAction }) {
   const deployContract = async () => {
     if (authenticated) {
       await deploy().then(() => console.log('deploy!'))
-    } 
+    }
   }
 
   return (
@@ -23,7 +23,7 @@ function Deploy({ deploy, authenticated, initNetworkAction }) {
         <Paragraph textAlign="center">
           This address doesn't own a contract yet.
           Please select a Metamask account with an existing contract
-          or deploy a new one
+          or deploy a new one.
         </Paragraph>
         <Button
           size="small"
