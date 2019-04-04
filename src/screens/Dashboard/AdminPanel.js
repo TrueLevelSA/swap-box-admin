@@ -5,7 +5,7 @@ import { Box } from 'grommet'
 import { Form, Section, Modal, DataTable } from 'components'
 import { DIALOG_TYPE } from 'components'
 
-const AdminPanel = ({ route }) => {
+const AdminPanel = ({ route, btms }) => {
   const [modalShow, setModalShow] = useState()
   const [dialogType, setDialogType] = useState()
 
@@ -23,11 +23,7 @@ const AdminPanel = ({ route }) => {
       content: (
         <DataTable
           edit={(btm) => console.log('editing', btm.address)}
-          data={[
-            { address: '0x909f74Ffdc223586d0d30E78016E707B6F5a45E2' , buy: '0.23', sell: '0.53' },
-            { address: '0x909f74Fassadsd86d0d30E78016E707B6F5a45E2' , buy: '0.23', sell: '0.53' },
-            { address: '0x909f74Ffdcasdsdsdsda0E78016E707B6F5a45E2' , buy: '0.23', sell: '0.53' }
-          ]}
+          data={btms}
         />
       )
     },
@@ -82,8 +78,10 @@ const AdminPanel = ({ route }) => {
   )
 }
 
-const mapStateToProps = ({ network }) => ({
-  authenticated: network.status === 'authenticated'
+const mapStateToProps = ({ network, contract }) => ({
+  authenticated: network.status === 'authenticated',
+  btms: contract.btms
+
 })
 
 const mapDispatchToProps = dispatch => ({
