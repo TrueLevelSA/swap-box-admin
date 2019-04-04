@@ -27,7 +27,7 @@ class App extends Component {
     const { route, network, address } = this.props
     return (
       <Grommet theme={GrommetTheme} full>
-        <Grid fill rows={['auto', 'flex', `${theme.footer.height}`]} gap="xsmall" alignContent="between">
+        <Grid rows={['auto', 'flex', `${theme.footer.height}`]} gap="xsmall" alignContent="between">
           <Box id="#header" align="center" background="light-2" elevation="xs">
             <SWrapper pad={{ vertical: "xsmall", horizontal: "medium" }}>
               <Header network={network} address={address}/>

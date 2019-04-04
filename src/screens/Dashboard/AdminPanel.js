@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { Box } from 'grommet'
 
-import { Form, Section, Modal } from 'components'
+import { Form, Section, Modal, DataTable } from 'components'
 import { DIALOG_TYPE } from 'components'
 
 const AdminPanel = ({ route }) => {
@@ -12,7 +12,7 @@ const AdminPanel = ({ route }) => {
   const sections = [
     {
       title: 'Manage BTMs',
-      content: 'Add BTMs to your contract, activate or deactive a BTM or change its fee',
+      description: 'Add BTMs to your contract, activate or deactive a BTM or change its fee',
       action: {
         label: 'Add BTM',
         onClick: () => {
@@ -20,10 +20,20 @@ const AdminPanel = ({ route }) => {
           setModalShow(true)
         }
       },
+      content: (
+        <DataTable
+          edit={(btm) => console.log('editing', btm.address)}
+          data={[
+            { address: '0x909f74Ffdc223586d0d30E78016E707B6F5a45E2' , buy: '0.23', sell: '0.53' },
+            { address: '0x909f74Fassadsd86d0d30E78016E707B6F5a45E2' , buy: '0.23', sell: '0.53' },
+            { address: '0x909f74Ffdcasdsdsdsda0E78016E707B6F5a45E2' , buy: '0.23', sell: '0.53' }
+          ]}
+        />
+      )
     },
     {
       title: 'Withdraw',
-      content: 'Withdraw balance from the contract. The corresponding value will be transfered to the current owner',
+      description: 'Withdraw balance from the contract. The corresponding value will be transfered to the current owner',
       action: {
         label: 'Withdraw',
         onClick: () => {
@@ -34,7 +44,7 @@ const AdminPanel = ({ route }) => {
     },
     {
       title: 'Transfer',
-      content: 'Transfer this contract to another account',
+      description: 'Transfer this contract to another account',
       isDangerous: true,
       action: {
         label: 'Transfer',
@@ -54,8 +64,9 @@ const AdminPanel = ({ route }) => {
             key={`section-${index}`}
             isDangerous={section.isDangerous}
             title={section.title}
-            content={section.content}
+            description={section.description}
             action={section.action}
+            content={section.content}
           />
         ))
       }

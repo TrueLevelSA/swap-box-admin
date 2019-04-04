@@ -5,7 +5,7 @@ import { Box, Heading, Text } from 'grommet'
 import { Button } from 'components'
 
 
-const normalSection = ({ title, content, action }) => (
+const normalSection = ({ title, description, action, content, extra = null }) => (
   <>
     <Heading
       level="3"
@@ -23,7 +23,7 @@ const normalSection = ({ title, content, action }) => (
         gap="small">
         <Box>
           <Text margin={{ vertical: 'xsmall' }}>
-            {content}
+            {description}
           </Text>
         </Box>
         <Box width="250px">
@@ -34,12 +34,17 @@ const normalSection = ({ title, content, action }) => (
             onClick={action.onClick} />
         </Box>
       </Box>
+      {
+        content && (
+          <>{ content }</>
+        )
+      }
     </Box>
   </>
 )
 
 
-const dangerSection = ({ title, content, action: { onClick, label } }) => (
+const dangerSection = ({ title, description, action: { onClick, label } }) => (
   <>
     <Heading
       level="3"
@@ -64,7 +69,7 @@ const dangerSection = ({ title, content, action: { onClick, label } }) => (
         gap="small">
         <Box>
           <Text margin={{ vertical: 'xsmall' }}>
-            {content}
+            {description}
           </Text>
         </Box>
         <Box width="150px">
