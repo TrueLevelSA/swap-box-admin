@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Box } from 'grommet'
 
-import { Form, Section, Modal, DataTable } from 'components'
-import { DIALOG_TYPE } from 'components'
+import { Form, Section, Modal, DIALOG_TYPE, DataTable } from 'components'
 
-const AdminPanel = ({ route, btms }) => {
-  const [modalShow, setModalShow] = useState()
-  const [dialogType, setDialogType] = useState()
+const AdminPanel = ({ history, route, btms }) => {
+  const openModal = (dialogType, params) => {
+    history.push(route.path, { modal: true, dialog: dialogType, params: params })
+  }
 
   const sections = [
     {
@@ -15,27 +16,20 @@ const AdminPanel = ({ route, btms }) => {
       description: 'Add BTMs to your contract, activate or deactive a BTM or change its fee',
       action: {
         label: 'Add BTM',
-        onClick: () => {
-          setDialogType(DIALOG_TYPE.BTM_ADD)
-          setModalShow(true)
-        }
+        onClick: () => openModal(DIALOG_TYPE.BTM_ADD)
       },
-      content: (
-        <DataTable
-          edit={(btm) => console.log('editing', btm.address)}
-          data={btms}
-        />
-      )
+      content: btms.length > 0 ? (
+          <DataTable
+            edit={(btm) => openModal(DIALOG_TYPE.BTM_EDIT, btm)}
+            data={btms} />
+        ) : null
     },
     {
       title: 'Withdraw',
       description: 'Withdraw balance from the contract. The corresponding value will be transfered to the current owner',
       action: {
         label: 'Withdraw',
-        onClick: () => {
-          setDialogType(DIALOG_TYPE.WITHDRAW)
-          setModalShow(true)
-        }
+        onClick: () => openModal(DIALOG_TYPE.WITHDRAW)
       },
     },
     {
@@ -44,10 +38,7 @@ const AdminPanel = ({ route, btms }) => {
       isDangerous: true,
       action: {
         label: 'Transfer',
-        onClick: () => {
-          setDialogType(DIALOG_TYPE.TRANSFER)
-          setModalShow(true)
-        }
+        onClick: () => openModal(DIALOG_TYPE.TRANSFER)
       },
     }
   ]
@@ -66,14 +57,6 @@ const AdminPanel = ({ route, btms }) => {
           />
         ))
       }
-      <Modal
-        close={() => setModalShow(false)}
-        show={modalShow}
-        type={dialogType}/>
-      {/*<Modal
-        close={() => setModalShow(false)}
-        show={true}
-        type={DIALOG_TYPE.BTM_ADD} />*/}
     </Box>
   )
 }
@@ -91,4 +74,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AdminPanel)
+)(withRouter(AdminPanel))

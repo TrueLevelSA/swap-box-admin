@@ -4,7 +4,7 @@ import { FormClose } from 'grommet-icons'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
-import { Button } from 'components'
+import { Button, EthAddress } from 'components'
 import { addBTM } from 'store/swap.action'
 
 const SFormField = styled(FormField)`
@@ -16,14 +16,15 @@ const SFormField = styled(FormField)`
   & input { padding: 11px 0; }
   & span { margin-left: 0; }
 `
-function BtmAddDialog({ close, onSubmit }) {
-
+function BtmEditDialog({ close, onSubmit, params }) {
+  const { address, buy, sell } = params
+  console.log(params, address, buy, sell)
   return (
     <>
       <Box>
         <Box direction="row" justify="between">
           <Heading margin={{ vertical: 'small' }}level="4">
-            Add BTM
+            Edit BTM
           </Heading>
           <Button alignSelf="start" onClick={close}>
             <FormClose size="medium"/>
@@ -31,21 +32,28 @@ function BtmAddDialog({ close, onSubmit }) {
         </Box>
         <Box>
           <Text margin={{ vertical: 'xsmall' }}>
-            Add the address of a BTM in order to connect it with your
-            SwapBox contract.
+            Edit the params of the BTM <EthAddress address={address} />
           </Text>
           <Box pad={{ top: 'medium'}}>
             <Form
               onSubmit={({ value }) => onSubmit(value)}>
-              <SFormField
-                style={{ flexGrow: '1' }}
-                name="btmAddress"
-                label="BTM Address"
-                required={true}
-                placeholder="0xe923f..." />
+              <Box direction="row-responsive" gap="small" justify="between">
+                <SFormField
+                  name="buyerFee"
+                  label="Buyer Fee %"
+                  type="number"
+                  value={sell}
+                  placeholder="0.00" />
+                <SFormField
+                  name="sellerFee"
+                  label="Seller Fee %"
+                  type="number"
+                  value={sell}
+                  placeholder="0.00" />
+              </Box>
               <Box direction="row" justify="end">
                 <Button
-                  label="Add BTM"
+                  label="Edit BTM"
                   type="submit"
                   margin={{ top: 'medium', bottom: 'small' }}
                   primary/>
@@ -73,4 +81,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(BtmAddDialog)
+)(BtmEditDialog)

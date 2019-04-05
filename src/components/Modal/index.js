@@ -3,8 +3,8 @@ import { Layer, Box } from 'grommet'
 
 import { DIALOG_TYPE, DIALOGS } from './types'
 
-const Modal = ({ show, close, type }) => {
-  const Dialog = DIALOGS[type]
+const Modal = ({ show, close, type, params }) => {
+  const Dialog = DIALOGS[type] || type
   return (
     <>
       {
@@ -13,7 +13,7 @@ const Modal = ({ show, close, type }) => {
             onEsc={close}
             onClickOutside={close}>
             <Box pad="medium">
-              <Dialog close={close} />
+              <Dialog close={close} params={params} />
             </Box>
           </Layer>
         )

@@ -12,45 +12,44 @@ const SDataTable = styled(DataTable)`
   th:nth-of-type(1) { width: 40% !important; }
   th:nth-of-type(4) { width: 5em !important; }
 `
-
-const defaultColumns = [
-  {
-    property: 'address',
-    header: 'BTM Address',
-    primary: true,
-    render: btm => (<EthAddress address={btm.address} />)
-  },
-  {
-    property: 'buy',
-    header: 'Buyer',
-    render: btm => (
-      <Box fill >
-        <Text textAlign="center">{btm.buy}</Text>
-      </Box>
-    )
-  },
-  {
-    property: 'sell',
-    header: 'Seller',
-    render: btm => (
-      <Box fill>
-        <Text textAlign="center">{btm.sell}</Text>
-      </Box>
-    )
-  },
-  {
-    property: 'action',
-    render: (datum) => (
-      <Button
-        plain
-        label={<Text>edit</Text>}
-        onClick={() => edit(datum)}
-        hoverIndicator />
-    )
-  }
-]
-
 export default ({ columns, data, edit }) => {
+  const defaultColumns = [
+    {
+      property: 'address',
+      header: 'BTM Address',
+      primary: true,
+      render: btm => (<EthAddress address={btm.address} />)
+    },
+    {
+      property: 'buy',
+      header: 'Buyer',
+      render: btm => (
+        <Box fill >
+          <Text textAlign="center">{btm.buy}</Text>
+        </Box>
+      )
+    },
+    {
+      property: 'sell',
+      header: 'Seller',
+      render: btm => (
+        <Box fill>
+          <Text textAlign="center">{btm.sell}</Text>
+        </Box>
+      )
+    },
+    {
+      property: 'action',
+      render: (datum) => (
+        <Button
+          plain
+          label={<Text>edit</Text>}
+          onClick={() => edit(datum)}
+          hoverIndicator />
+      )
+    }
+  ]
+
   return (
     <SDataTable
       margin={{ vertical: 'small'}}

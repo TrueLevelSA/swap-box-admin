@@ -5,9 +5,11 @@ const initialState = {
   signer: {},
   btms: [
     { address: '0x909f74Ffdc223586d0d30E78016E707B6F5a45E2' , buy: '0.23', sell: '0.53' },
-    { address: '0x909f74Fassadsd86d0d30E78016E707B6F5a45E2' , buy: '0.23', sell: '0.53' },
-    { address: '0x909f74Ffdcasdsdsdsda0E78016E707B6F5a45E2' , buy: '0.23', sell: '0.53' }
-  ]
+    { address: '0x909f74Fassadsd86d0d30E78016E707B6F5a45E2' , buy: '0.56', sell: '0.23' },
+    { address: '0x909f74Ffdcasdsdsdsda0E78016E707B6F5a45E2' , buy: '0.32', sell: '0.43' }
+  ],
+  ethBalance: "103.23",
+  baseTokenBalance: "897.123",
 }
 
 export default (state = initialState, { type, payload }) => {

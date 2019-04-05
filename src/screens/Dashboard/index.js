@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { renderRoutes } from "react-router-config"
+import { renderRoutes } from 'react-router-config'
 import { Box } from 'grommet'
 
 import { theme } from 'theme'
@@ -18,21 +18,21 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { route, contractAddress = '' } = this.props
+    const { route, ethBalance, baseTokenBalance, contractAddress = '' } = this.props
     return (
       <>
         <Box
-        height={`${theme.qrCode.container}px`}
-        margin={{ vertical: 'small'}}
-        direction="row"
-        justify="between">
+          height={`${theme.qrCode.container}px`}
+          margin={{ vertical: 'small'}}
+          direction="row"
+          justify="between">
           <Box>
             <QrCode address={contractAddress} />
             <EthAddress address={contractAddress} />
           </Box>
           <Box>
-            <Currency color="dark-1" label="EthBalance" value="100.0002" currency="ETH" size="large"/>
-            <Currency color="dark-3" label="BaseToken" value="2345.0003" currency="xCHF"/>
+            <Currency color="dark-1" label="EthBalance" value={ethBalance} currency="ETH" size="large"/>
+            <Currency color="dark-3" label="BaseToken" value={baseTokenBalance} currency="xCHF"/>
           </Box>
         </Box>
         <Box margin={{ vertical: 'small'}} fill>
@@ -45,7 +45,9 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = ({ contract }) => ({
-  contractAddress: contract.address // @TODO currently displays account. Should be contract.
+  contractAddress: contract.address, // @TODO currently displays account. Should be contract.
+  ethBalance: contract.ethBalance,
+  baseTokenBalance: contract.baseTokenBalance,
 })
 
 const mapDispatchToProps = dispatch => ({
