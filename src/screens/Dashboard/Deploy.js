@@ -3,15 +3,12 @@ import { Box, Heading, Paragraph } from 'grommet'
 import { connect } from 'react-redux'
 
 import { Button } from 'components'
-import { deploy } from 'store/swap.action'
-import { initNetworkAction } from 'store/network.action'
+import { deployContract } from 'store'
 
-function Deploy({ deploy, authenticated, initNetworkAction }) {
+function Deploy({ deploy, authenticated }) {
 
   const deployContract = async () => {
-    if (authenticated) {
-      await deploy().then(() => console.log('deploy!'))
-    }
+    await deploy().then(() => console.log('deploy!'))
   }
 
   return (
@@ -36,15 +33,11 @@ function Deploy({ deploy, authenticated, initNetworkAction }) {
   )
 }
 
-const mapStateToProps = ({ network }) => ({
-  authenticated: network.status === 'authenticated'
-})
-
 const mapDispatchToProps = dispatch => ({
-  deploy: () => dispatch(deploy()),
+  deploy: () => dispatch(deployContract()),
 })
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(Deploy)

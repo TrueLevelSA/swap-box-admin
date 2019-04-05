@@ -1,3 +1,5 @@
+import React from 'react'
+import { Redirect } from 'react-router-dom'
 import App from './App.js'
 import {
   AdminPanel,
@@ -18,7 +20,11 @@ export const routes = [
         path: '/',
         name: 'default',
         exact: true,
-        component: Connect,
+        render: ({ isAuthenticated }) => (
+          isAuthenticated ? (
+            <Redirect to="/dashboard" />
+          ) : (<Connect />)
+        )
       },
       {
         path: '/connect',
@@ -48,6 +54,7 @@ export const routes = [
     ]
   },
 ]
+
 
 /*
   Build an object that can be used to access path by route name within a link

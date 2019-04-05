@@ -5,20 +5,13 @@ import { Box } from 'grommet'
 
 import { theme } from 'theme'
 import { EthAddress, QrCode, Currency } from 'components'
-import { swapInit } from 'store/swap.action'
-import { initNetworkAction } from 'store/network.action'
+import { initContract } from 'store'
 
 class Dashboard extends Component {
-  async componentDidMount() {
-    const { authenticated, initNetworkAction, contractInit } = this.props
-    if (!authenticated) {
-      await initNetworkAction('METAMASK')
-    }
-    await contractInit()
-  }
 
   render() {
-    const { route, ethBalance, baseTokenBalance, contractAddress = '' } = this.props
+    const { route, contractBalance, contractAddress } = this.props
+    const { eth, baseToken } = contractBalance
     return (
       <>
         <Box
@@ -31,8 +24,8 @@ class Dashboard extends Component {
             <EthAddress address={contractAddress} />
           </Box>
           <Box>
-            <Currency color="dark-1" label="EthBalance" value={ethBalance} currency="ETH" size="large"/>
-            <Currency color="dark-3" label="BaseToken" value={baseTokenBalance} currency="xCHF"/>
+            <Currency color="dark-1" label="EthBalance" value={eth} currency="ETH" size="large"/>
+            <Currency color="dark-3" label="BaseToken" value={baseToken} currency="xCHF"/>
           </Box>
         </Box>
         <Box margin={{ vertical: 'small'}} fill>
@@ -44,15 +37,14 @@ class Dashboard extends Component {
 
 }
 
-const mapStateToProps = ({ contract }) => ({
-  contractAddress: contract.address, // @TODO currently displays account. Should be contract.
-  ethBalance: contract.ethBalance,
-  baseTokenBalance: contract.baseTokenBalance,
+const mapStateToProps = ({ data }) => ({
+  contractAddress: data.contractAddress, // @TODO currently displays account. Should be contract.
+  contractBalance: data.contractBalance,
+  hasContract: data.hasContract
 })
 
 const mapDispatchToProps = dispatch => ({
-  contractInit: () => dispatch(swapInit()),
-  initNetworkAction: (type) => dispatch(initNetworkAction(type))
+  contractInit: () => dispatch(initContract('empty')),
 })
 
 export default connect(

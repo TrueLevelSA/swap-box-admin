@@ -1,22 +1,39 @@
 import { ethers } from 'ethers'
+
+import settings from './settings.json'
 import source from './abi/Atola.json'
 import bytecode from './abi/AtolaDeployedBytecode.json'
-import settings from './settings.json'
+
 
 class SwapService {
   constructor(signer, account, networkName) {
-    this.instance = null
-    this.contracts = []
-    this.hasContract = false
-    this.account = account
+    this.address = null
+    this.contractInstance = null
+    this.account = null
+    this.factory = null
     this.chain = settings.chain['main'] // @TODO should be networkName
+  }
+
+  async init(signer, account, networkName) {
+    this.account = account
     this.factory = new ethers
       .ContractFactory(source.abi, source.bytecode)
       .connect(signer)
+
+    const contracts = await this.findDeployedContractAddress()
+    this.address = this.lastestContractAddress(contracts)
+
+    try {
+      await this.attach(this.address)
+    } finally {
+      return this
+    }
+
   }
 
-  lastestContractAddress() {
-    return this.contracts[this.contracts.length - 1].creates
+  lastestContractAddress(contracts = []) {
+    const [latest] = contracts.slice(-1)
+    if (latest) { return latest.creates }
   }
 
   // @TODO this only finds contracts created by the account and will not
@@ -25,12 +42,11 @@ class SwapService {
     const provider = new ethers.providers.EtherscanProvider('ropsten');
     try {
       const txHistory = await provider.getHistory(this.account)
-      this.contracts = txHistory
+      return txHistory
         .filter(tx => tx.creates !== null)
         .filter(tx => tx.data === bytecode.withArguments)
-      this.hasContract = true
     } catch (e) {
-      console.debug('No deployed contracts found')
+      console.debug('No deployed contracts found', e)
     }
   }
 
@@ -40,7 +56,7 @@ class SwapService {
     baseToken = this.chain.ATOLA_BASE_CURRENCY
     baseExchange = this.chain.ATOLA_BASE_EXCHANGE
     try {
-      this.instance = await this.factory.deploy(baseToken, baseExchange)
+      this.contractInstance = await this.factory.deploy(baseToken, baseExchange)
     } catch (e) {
       throw new Error(e)
     } finally {
@@ -49,11 +65,8 @@ class SwapService {
   }
 
   async attach(address) {
-    this.address = address
     try {
-      this.instance = await this.factory.attach(this.address)
-    } catch (e) {
-      throw new Error(e)
+      this.contractInstance = await this.factory.attach(address)
     } finally {
       return this
     }
@@ -62,32 +75,45 @@ class SwapService {
   async transferOwnership(receiver) {
     const addr = ethers.utils.getAddress(receiver)
     try {
-      await this.instance.transferOwnership(receiver)
+      await this.contractInstance.transferOwnership(receiver)
     } finally {
       return this
     }
   }
 
-  async addBTM(btm) {
-    const address = ethers.utils.getAddress(btm)
+  async addBTM({ address }) {
+    const addr = ethers.utils.getAddress(address)
     try {
-      await this.instance.addMachine(address)
+      await this.contractInstance.addMachine(address)
     } finally {
       return this
     }
-  } 
+  }
+
+  async editBTM({ address, buyerFee, sellerFee }) {
+    const addr = ethers.utils.getAddress(address)
+    try {
+      // await this.contractInstance.addMachine(address)
+    } finally {
+      return this
+    }
+  }
 
   async withdraw(amount, currency) {
     amount = ethers.utils.bigNumberify(amount).toHexString()
     switch(currency) {
       case 'ETH':
-        return this.instance.withdrawEth(amount)
+        return this.contractInstance.withdrawEth(amount)
       case 'XCHF':
         const token = ethers.utils.getAddress(this.chain.ATOLA_BASE_CURRENCY)
-        return this.instance.withdrawTokens(token, amount)
+        return this.contractInstance.withdrawTokens(token, amount)
     }
   }
 
 }
 
-export default SwapService
+// ES6 Singleton design pattern
+// https://www.sitepoint.com/javascript-design-patterns-singleton/
+const contractInstance = new SwapService()
+
+export default contractInstance

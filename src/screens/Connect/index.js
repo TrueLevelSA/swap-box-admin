@@ -2,9 +2,8 @@ import React, { Component, useState } from 'react'
 import { Box, Heading } from 'grommet'
 import { connect } from 'react-redux'
 
-import { initNetworkAction } from 'store/network.action'
+import { initSystem } from 'store'
 import { WalletConnect } from 'components'
-import { Web3Provider } from 'services'
 
 class Connect extends Component {
 
@@ -15,8 +14,7 @@ class Connect extends Component {
         active: true,
         action: async () => {
           try {
-            await this.props.initNetworkAction('METAMASK')
-            this.props.history.push('/dashboard')
+            await this.props.initSystem('METAMASK')
           } catch (e) {
             // Emit auth failure notification
             console.debug('Auth failed')
@@ -37,7 +35,6 @@ class Connect extends Component {
   }
 
   render() {
-
     return (
       <>
         <Box align="center" justify="center" fill>
@@ -64,16 +61,11 @@ class Connect extends Component {
   }
 }
 
-const mapStateToProps = ({ network }) => ({
-  provider: network.provider,
-  network: network
-})
-
 const mapDispatchToProps = dispatch => ({
-  initNetworkAction: (type) => dispatch(initNetworkAction(type))
+  initSystem: (type) => dispatch(initSystem(type))
 })
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(Connect)

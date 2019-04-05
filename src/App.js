@@ -23,14 +23,19 @@ const SWrapper = styled(Wrapper)`
 
 class App extends Component {
 
+  isAdminPanel(pathname) {
+    return pathname === '/dashboard/admin'
+  }
+
   render() {
-    const { route, network, address } = this.props
+    const { route, networkName, userAccount, location } = this.props
+
     return (
       <Grommet theme={GrommetTheme} full>
-        <Grid rows={['auto', 'flex', `${theme.footer.height}`]} gap="xsmall" alignContent="between">
+        <Grid fill={!this.isAdminPanel(location.pathname)} rows={['auto', 'flex', `${theme.footer.height}`]} gap="xsmall" alignContent="between">
           <Box id="#header" align="center" background="light-2" elevation="xs">
             <SWrapper pad={{ vertical: "xsmall", horizontal: "medium" }}>
-              <Header network={network} address={address}/>
+              <Header network={networkName} address={userAccount}/>
             </SWrapper>
           </Box>
           <Box id="#main" align="center">
@@ -51,9 +56,9 @@ class App extends Component {
 
 }
 
-const mapStateToProps = ({ network }) => ({
-  network: network.name,
-  address: network.address,
+const mapStateToProps = ({ auth }) => ({
+  networkName: auth.networkName,
+  userAccount: auth.userAccount,
 })
 
 const mapDispatchToProps = dispatch => ({})

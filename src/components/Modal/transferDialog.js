@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 
 import { Button } from 'components'
-import { transferOwnership } from 'store/swap.action'
+import { transferOwnership } from 'store'
 
 const SFormField = styled(FormField)`
   & label {

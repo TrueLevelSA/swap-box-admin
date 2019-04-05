@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 
 import { Button, EthAddress } from 'components'
-import { withdraw } from 'store/swap.action'
+import { withdraw } from 'store'
 
 const SFormField = styled(FormField)`
   & label {
@@ -73,8 +73,8 @@ function WithDrawDialog({ close, account, onSubmit }) {
 
 // @TODO currently we rely on the connected account to display contract
 // owner. This should actually be the owner fetched from the contract
-const mapStateToProps = ({ network }) => ({
-  account: network.address
+const mapStateToProps = ({ auth }) => ({
+  account: auth.userAccount
 })
 
 // @TODO this component should be presentational

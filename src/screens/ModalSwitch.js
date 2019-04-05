@@ -2,8 +2,14 @@ import React from 'react'
 import { BrowserRouter, withRouter } from 'react-router-dom'
 import { Heading } from 'grommet'
 
-import { Modal } from '../components'
+import { Modal } from 'components'
 
+
+/*
+  Places a Modal in the DOM and on every route change will display the overlay
+  if location.state.modal === true. Default close behaviour is to navigate to
+  the existing route.
+*/
 const ModalSwitch = ({ type, children, ...props }) => {
   const location = props.location
   const history = props.history

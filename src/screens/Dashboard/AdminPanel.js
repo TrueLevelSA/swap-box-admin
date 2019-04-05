@@ -61,10 +61,8 @@ const AdminPanel = ({ history, route, btms }) => {
   )
 }
 
-const mapStateToProps = ({ network, contract }) => ({
-  authenticated: network.status === 'authenticated',
-  btms: contract.btms
-
+const mapStateToProps = ({ data }) => ({
+  btms: data.btms
 })
 
 const mapDispatchToProps = dispatch => ({

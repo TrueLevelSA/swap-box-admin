@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Heading, Text, Select, Box, Form, FormField, } from 'grommet'
 import { FormClose } from 'grommet-icons'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
 import { Button, EthAddress } from 'components'
-import { addBTM } from 'store/swap.action'
+import { editBTM } from 'store'
 
 const SFormField = styled(FormField)`
   & label {
@@ -18,7 +18,9 @@ const SFormField = styled(FormField)`
 `
 function BtmEditDialog({ close, onSubmit, params }) {
   const { address, buy, sell } = params
-  console.log(params, address, buy, sell)
+  const [ buyerFee, setBuyerFee ] = useState(buy)
+  const [ sellerFee, setSellerFee ] = useState(sell)
+
   return (
     <>
       <Box>
@@ -36,19 +38,21 @@ function BtmEditDialog({ close, onSubmit, params }) {
           </Text>
           <Box pad={{ top: 'medium'}}>
             <Form
-              onSubmit={({ value }) => onSubmit(value)}>
+              onSubmit={() => onSubmit({ address, buyerFee, sellerFee })}>
               <Box direction="row-responsive" gap="small" justify="between">
                 <SFormField
                   name="buyerFee"
                   label="Buyer Fee %"
                   type="number"
-                  value={sell}
+                  value={buyerFee}
+                  onChange={e => setBuyerFee(e.target.value)}
                   placeholder="0.00" />
                 <SFormField
                   name="sellerFee"
                   label="Seller Fee %"
                   type="number"
-                  value={sell}
+                  value={sellerFee}
+                  onChange={e => setSellerFee(e.target.value)}
                   placeholder="0.00" />
               </Box>
               <Box direction="row" justify="end">
@@ -68,14 +72,14 @@ function BtmEditDialog({ close, onSubmit, params }) {
 
 // @TODO currently we rely on the connected account to display contract
 // owner. This should actually be the owner fetched from the contract
-const mapStateToProps = ({ network }) => ({
-  account: network.address
+const mapStateToProps = ({ auth }) => ({
+  account: auth.userAccount
 })
 
 // @TODO this component should be presentational
 // Once modal is abstracted we should no longer need a store.
 const mapDispatchToProps = dispatch => ({
-  onSubmit: ({ address, buyerFee, sellerFee }) => dispatch(addBTM(address, buyerFee, sellerFee))
+  onSubmit: (btm) => dispatch(editBTM(btm))
 })
 
 export default connect(

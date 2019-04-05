@@ -6,7 +6,7 @@ import { ethers } from 'ethers'
   https://github.com/ethers-io/ethers.js/issues/59#issuecomment-358224800
 */
 
-export default class Web3Provider {
+export default class Web3Service {
   constructor() {}
 
   async init(web3) {
