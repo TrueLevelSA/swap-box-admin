@@ -8,6 +8,7 @@
     "grommet": "^2.5.5",
     "grommet-icons": "^4.2.0",
     "lodash.range": "^3.2.0",
+    "lodash.sortby": "^4.7.0",
     "normalize.css": "^8.0.1",
     "qrcode.react": "^0.9.3",
     "react": "^16.6.3",

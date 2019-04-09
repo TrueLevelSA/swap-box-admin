@@ -14,7 +14,7 @@ const SImg = styled('img')`
 
 
 export default () => {
-  const isDev = true // @TODO expose links only in dev environment 
+  const isDev = true // @TODO expose links only in dev environment
   const paths = pathByName(routes)
   return (
     <Box direction="row" align="center" justify="between">

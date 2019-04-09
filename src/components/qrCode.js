@@ -15,11 +15,15 @@ const SQRCode = styled(QRCode)``
 
 export default ({ address, borderColor }) => (
   <SContainer borderColor={borderColor}>
-    <SQRCode
-      value={address}
-      includeMargin
-      renderAs="svg"
-      size={theme.qrCode.size}
-      />
+    {
+      address && (
+        <SQRCode
+        value={address}
+        includeMargin
+        renderAs="svg"
+        size={theme.qrCode.size}
+        />
+      )
+    }
   </SContainer>
 )

@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Redirect } from 'react-router-dom'
 import { Box, Heading, Paragraph } from 'grommet'
 import { connect } from 'react-redux'
 
@@ -6,9 +7,15 @@ import { Button } from 'components'
 import { deployContract } from 'store'
 
 function Deploy({ deploy, authenticated }) {
+  const [toAdmin, setToAdmin] = useState(false)
 
   const deployContract = async () => {
-    await deploy().then(() => console.log('deploy!'))
+    await deploy()
+    setToAdmin(true)
+  }
+
+  if (toAdmin) {
+    return <Redirect to="/dashboard/admin" />
   }
 
   return (

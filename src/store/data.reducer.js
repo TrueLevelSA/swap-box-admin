@@ -8,8 +8,8 @@ const initialState = {
   ],
   contractAddress: '',
   contractBalance: {
-    eth: "103.23",
-    baseToken: "897.123",
+    eth: null,        // It will actually be a BN.js provided by ether.js
+    baseToken: null,  // It will actually be a BN.js provided by ether.js
   },
 }
 
@@ -20,8 +20,8 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, btms }
     }
     case 'SET_CONTRACT_BALANCE': {
-      const { ethBalance, baseTokenBalance } = payload
-      return { ...state, contractBalance: { ethBalance, baseTokenBalance } }
+      const { eth, baseToken } = payload
+      return { ...state, contractBalance: { eth, baseToken } }
     }
     case 'SET_CONTRACT_ADDRESS': {
       const { hasContract, contractAddress } = payload

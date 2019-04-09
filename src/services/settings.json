@@ -22,6 +22,11 @@
       "ATOLA_BASE_CURRENCY": "",
       "ATOLA_BASE_EXCHANGE": "",
       "uniswapFactoryAddress": "0xf5D915570BC477f9B8D6C0E980aA81757A3AaC36"
+    },
+    "localhost": {
+      "fromBlock": 0,
+      "ATOLA_BASE_CURRENCY": "0xCfEB869F69431e42cdB54A4F4f105C19C080A601",
+      "ATOLA_BASE_EXCHANGE": "0x141f5fCa84Cc82EF0A6751241019471731289456"
     }
   },
   "test": {

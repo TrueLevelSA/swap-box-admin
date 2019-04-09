@@ -1,4 +1,5 @@
 import React, { Component, useState } from 'react'
+import { Redirect } from 'react-router-dom'
 import { Box, Heading } from 'grommet'
 import { connect } from 'react-redux'
 
@@ -8,6 +9,7 @@ import { WalletConnect } from 'components'
 class Connect extends Component {
 
   state = {
+    toDashboard: false,
     options: [
       {
         type: 'metamask',
@@ -15,6 +17,7 @@ class Connect extends Component {
         action: async () => {
           try {
             await this.props.initSystem('METAMASK')
+            this.setState({ toDashboard: true })
           } catch (e) {
             // Emit auth failure notification
             console.debug('Auth failed')
@@ -35,6 +38,10 @@ class Connect extends Component {
   }
 
   render() {
+    if (this.state.toDashboard === true) {
+      return <Redirect to="/dashboard" />
+    }
+
     return (
       <>
         <Box align="center" justify="center" fill>

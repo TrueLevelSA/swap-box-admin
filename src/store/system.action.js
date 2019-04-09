@@ -1,4 +1,5 @@
 import { Web3Service } from 'services'
+import { initContract } from './contract.action'
 
 export function initSystem(type) {
   return async dispatch => {
@@ -7,7 +8,6 @@ export function initSystem(type) {
         const service = await new Web3Service().init(window.web3)
         await dispatch(setService(service))
         await dispatch(setAuth(service))
-        // setSwapContract(service())
 
       } catch (err) {
         dispatch({ type: 'AUTH_FAILURE' })

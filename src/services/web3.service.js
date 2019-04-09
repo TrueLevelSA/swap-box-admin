@@ -35,7 +35,9 @@ export default class Web3Service {
   }
 
   getNetwork() {
-    return this.provider.network.name
+    if (this.provider.network)
+      return this.provider.network.name
+    return 'localhost'
   }
 
   getProvider() {
@@ -46,8 +48,37 @@ export default class Web3Service {
     return this.provider.getSigner()
   }
 
+  getStorageAt(address, position) {
+    return this.provider.getStorageAt(address, position)
+  }
+
   getAccount() {
-    // Alternative is await signer.getAddress()
+    // Alternative is await this.signer.getAddress()
     return this.provider._web3Provider.selectedAddress
+  }
+
+  getBlockNumber() {
+    return this.provider.getBlockNumber()
+  }
+
+  getBalance(address) {
+    return this.provider.getBalance(address)
+  }
+
+  async getHistory(account, from, until) {
+    let txPromises = [];
+    for (from; from <= until; from++) {
+      const block = await this.provider.getBlock(from)
+      if (!block || !block.transactions) continue;
+      block.transactions.forEach((txHash) => {
+        txPromises.push(this.provider.getTransaction(txHash))
+      })
+    }
+
+    const txHistory = await Promise.all(txPromises)
+    console.log(txHistory)
+    return txHistory.filter((tx) => {
+      return tx.from === account || tx.to === account
+    })
   }
 }

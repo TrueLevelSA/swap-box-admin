@@ -6,35 +6,42 @@ export function initContract() {
     const { userAccount, networkName } = auth
     const { web3Service } = system
     const signer = await web3Service.getSigner()
+    console.log('Init Contract:', userAccount, networkName, web3Service)
+
 
     let contract;
     try {
       contract = await SwapService.init(
         signer,
         userAccount,
-        networkName
+        networkName,
+        web3Service,
       )
+      await dispatch({ type: 'SYSTEM_INIT_CONTRACT', payload: { contract } })
+      await dispatch(setContractInfo())
     } catch (e) {
       throw new Error(e)
     }
 
-    dispatch({
-      type: 'SYSTEM_INIT_CONTRACT',
-      payload: { contract }
-    })
 
-    dispatch(setContractInfo())
   }
 }
-
+// @TODO clean actions and only call this function to set contract data.
 export function setContractInfo() {
   return async (dispatch) => {
+    const contract = SwapService
+    const { eth, baseToken } = await contract.getBalances()
     dispatch({
       type: 'SET_CONTRACT_ADDRESS',
       payload: {
-        hasContract: SwapService.hasContract,
-        contractAddress: SwapService.address
+        hasContract: contract.hasContract,
+        contractAddress: contract.address,
       }
+    })
+
+    dispatch({
+      type: 'SET_CONTRACT_BALANCE',
+      payload: { eth, baseToken }
     })
   }
 }
@@ -54,13 +61,13 @@ export function findExistingContract() {
   }
 }
 
-export function fetchExistingContract() {
+export function fetchExistingContract(address) {
   return async (dispatch) => {
     try {
       const deployed = await SwapService.attach(address)
       dispatch({
         type: 'ATTACH_SUCCESS',
-        payload: {}
+        payload: { deployed }
       })
     } catch (err) {
       throw new Error(err)

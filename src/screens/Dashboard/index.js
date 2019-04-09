@@ -12,6 +12,7 @@ class Dashboard extends Component {
   render() {
     const { route, contractBalance, contractAddress } = this.props
     const { eth, baseToken } = contractBalance
+
     return (
       <>
         <Box

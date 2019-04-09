@@ -8,9 +8,11 @@ const getLevel = size => (
   size === 'large' ? 2 : 3
 )
 
-const formatValue = value => (
-  value
-)
+const formatValue = value => {
+  if (value && typeof value.toString === 'function') return value.toString()
+  return value
+}
+
 
 
 const Currency = ({ label, value, currency, size, ...props }) => (
