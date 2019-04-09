@@ -67,7 +67,7 @@ const mapStateToProps = ({ auth }) => ({
 // @TODO this component should be presentational
 // Once modal is abstracted we should no longer need a store.
 const mapDispatchToProps = dispatch => ({
-  onSubmit: ({ address, buyerFee, sellerFee }) => dispatch(addBTM(address, buyerFee, sellerFee))
+  onSubmit: ({ btmAddress }) => dispatch(addBTM(btmAddress))
 })
 
 export default connect(

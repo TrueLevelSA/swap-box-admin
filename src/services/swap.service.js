@@ -12,6 +12,7 @@ class SwapService {
   constructor() {
     this.address = null
     this.contractInstance = null
+    this.baseTokenContract = null
     this.account = null
     this.factory = null
     this.service = null
@@ -31,6 +32,7 @@ class SwapService {
 
     try {
       await this.attach(this.address)
+      await this.setBaseTokenContract()
     } finally {
       return this
     }
@@ -68,13 +70,15 @@ class SwapService {
     } catch (e) {
        console.debug('No deployed contracts found', e)
     }
+  }
 
+  async setBaseTokenContract() {
+    const baseTokenAddr = await this.service.getStorageAt(this.address, 1)
+    this.baseTokenContract = new Contract(baseTokenAddr, erc20.abi, this.service.getProvider())
   }
 
   async getBalances() {
-    const baseTokenAddr = await this.service.getStorageAt(this.address, 1)
-    const baseTokenContract = new Contract(baseTokenAddr, erc20.abi, this.service.getProvider())
-    const baseTokenBalance = await baseTokenContract.balanceOf(this.address)
+    const baseTokenBalance = await this.baseTokenContract.balanceOf(this.address)
     const ethBalance = await this.service.getBalance(this.address)
 
     return {
@@ -114,7 +118,7 @@ class SwapService {
     }
   }
 
-  async addBTM({ address }) {
+  async addBTM(address) {
     const addr = ethers.utils.getAddress(address)
     try {
       await this.contractInstance.addMachine(address)
@@ -133,13 +137,24 @@ class SwapService {
   }
 
   async withdraw(amount, currency) {
-    amount = ethers.utils.bigNumberify(amount).toHexString()
+    currency = currency.toUpperCase()
+    if (currency !== 'ETH' && currency !== 'XCHF') {
+      throw new Error(`Currency ${currency} is not accepted by this contract`)
+    }
+
+    // amount = ethers.utils.bigNumberify(amount).toHexString()
     switch(currency) {
-      case 'ETH':
-        return this.contractInstance.withdrawEth(amount)
+      case 'ETH': {
+        const eth = ethers.utils.parseEther(amount) // Receives a BN in wei
+        return this.contractInstance.withdrawEth(eth.toHexString(), { gasLimit: 50000 })
+      }
+
       case 'XCHF':
-        const token = ethers.utils.getAddress(this.chain.ATOLA_BASE_CURRENCY)
-        return this.contractInstance.withdrawTokens(token, amount)
+        const decimals = await this.baseTokenContract.decimals.call()
+        const token = ethers.utils.getAddress(this.baseTokenContract.address)
+        const xchf = ethers.utils.parseUnits(amount, decimals) // Receives a BN in token decimals
+        console.log(token, xchf, xchf.toString())
+        return this.contractInstance.withdrawTokens(token, xchf.toHexString())
     }
   }
 

@@ -41,7 +41,7 @@ export function setContractInfo() {
 
     dispatch({
       type: 'SET_CONTRACT_BALANCE',
-      payload: { eth, baseToken }
+      payload: { eth, baseToken },
     })
   }
 }
@@ -90,11 +90,10 @@ export function deployContract() {
 }
 
 
-export function addBTM(btm) {
+export function addBTM(btmAddress) {
   return async (dispatch) => {
-    console.log('ADD', btm)
     try {
-      await SwapService.addBTM(btm)
+      await SwapService.addBTM(btmAddress)
       dispatch({ type: 'ADD_SUCCESS' })
     } finally {}
   }
