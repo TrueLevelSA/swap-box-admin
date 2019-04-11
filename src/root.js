@@ -5,7 +5,6 @@ import { renderRoutes } from 'react-router-config'
 import { hot } from 'react-hot-loader/root'
 
 import { routes } from 'routes'
-import { ModalSwitch } from 'screens'
 import { initSystem, initContract } from 'store'
 
 class Root extends Component {
@@ -19,10 +18,7 @@ class Root extends Component {
     const { isAuthenticated } = this.props
     return (
         <BrowserRouter>
-          <>
-            <ModalSwitch />
-            { renderRoutes(routes, { isAuthenticated }) }
-          </>
+          { renderRoutes(routes, { isAuthenticated }) }
         </BrowserRouter>
     )
   }

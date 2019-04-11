@@ -9,6 +9,7 @@ import {
 } from 'grommet'
 
 import { Header, Footer } from 'components'
+import { ModalSwitch } from 'screens'
 import { GrommetTheme, theme } from 'theme'
 
 const Wrapper = ({ children, ...props }) => (
@@ -53,6 +54,7 @@ class App extends Component {
             id="#main"
             align="center">
             <SWrapper>
+              <ModalSwitch />
               { renderRoutes(route.routes) }
             </SWrapper>
           </Box>
