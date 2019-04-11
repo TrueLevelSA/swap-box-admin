@@ -101,13 +101,18 @@ export function addBTM(btmAddress) {
   }
 }
 
+export function deleteBtm(btmAddress) {
+  return async (dispatch) => {
+    try {
+      await SwapService.deleteBTM(btmAddress)
+      dispatch({ type: 'DELETE_SUCCESS' })
+    } finally {}
+  }
+}
+
 export function editBTM({ address, buy, sell }) {
-  buy = (buy * 100).toString()
-  sell = (sell * 100).toString()
-  console.log(buy, sell)
-  buy = utils.bigNumberify(buy)
-  sell = utils.bigNumberify(sell)
-  debugger
+  buy = utils.bigNumberify((buy * 100).toString())
+  sell = utils.bigNumberify((sell * 100).toString())
 
   return async (dispatch) => {
     try {

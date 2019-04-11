@@ -8,11 +8,11 @@ const SDataTable = styled(DataTable)`
   tbody > tr:nth-child(odd) { background: ${defaultProps.theme.global.colors['light-3']}};
   table-layout: fixed;
   width: 100%;
-  th:nth-of-type(2), th:nth-of-type(3), th:nth-of-type(4) { text-align: center; }
+  th:nth-of-type(2), th:nth-of-type(3){ text-align: center; }
   th:nth-of-type(1) { width: 40% !important; }
-  th:nth-of-type(4) { width: 5em !important; }
+  th:nth-of-type(4), th:nth-of-type(5) { width: 4rem !important; }
 `
-export default ({ columns, data, edit }) => {
+export default ({ columns, data, onEdit, onDelete }) => {
   const defaultColumns = [
     {
       property: 'address',
@@ -22,32 +22,46 @@ export default ({ columns, data, edit }) => {
     },
     {
       property: 'buy',
-      header: 'Buyer',
+      header: 'Buy',
       render: btm => (
-        <Box fill >
+        <Box alignSelf="center">
           <Text textAlign="center">{btm.buy}</Text>
         </Box>
       )
     },
     {
       property: 'sell',
-      header: 'Seller',
+      header: 'Sell',
       render: btm => (
-        <Box fill>
+        <Box alignSelf="center">
           <Text textAlign="center">{btm.sell}</Text>
         </Box>
       )
     },
     {
-      property: 'action',
+      property: 'edit',
       render: (datum) => (
-        <Button
-          plain
-          label={<Text>edit</Text>}
-          onClick={() => edit(datum)}
-          hoverIndicator />
+        <Box alignSelf="center">
+          <Button
+            plain
+            label={<Text>edit</Text>}
+            onClick={() => onEdit(datum)}
+            hoverIndicator />
+        </Box>
       )
-    }
+    },
+    {
+      property: 'delete',
+      render: (datum) => (
+        <Box alignSelf="center">
+          <Button
+            plain
+            label={<Text>del</Text>}
+            onClick={() => onDelete(datum)}
+            hoverIndicator />
+        </Box>
+      )
+    },
   ]
 
   return (

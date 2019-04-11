@@ -46,14 +46,14 @@ function BtmEditDialog({ close, onSubmit, params: machineInfo }) {
               <Box direction="row-responsive" gap="small" justify="between">
                 <SFormField
                   name="buyerFee"
-                  label="Buyer Fee %"
+                  label="Buyer Fee"
                   type="number"
                   value={buyerFee}
                   onChange={e => setBuyerFee(e.target.value)}
                   placeholder="0.00" />
                 <SFormField
                   name="sellerFee"
-                  label="Seller Fee %"
+                  label="Seller Fee"
                   type="number"
                   value={sellerFee}
                   onChange={e => setSellerFee(e.target.value)}

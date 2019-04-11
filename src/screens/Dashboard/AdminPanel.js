@@ -21,7 +21,8 @@ const AdminPanel = ({ history, route, btms = [] }) => {
       content: btms.length > 0 ? (
           <Box>
             <DataTable
-              edit={(btm) => openModal(DIALOG_TYPE.BTM_EDIT, btm)}
+              onEdit={(btm) => openModal(DIALOG_TYPE.BTM_EDIT, btm)}
+              onDelete={(btm) => openModal(DIALOG_TYPE.BTM_DELETE, btm)}
               data={btms.map(({ address, buy, sell }) => ({
                 address,
                 buy: buy.toString(),

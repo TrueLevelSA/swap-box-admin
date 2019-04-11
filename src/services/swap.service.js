@@ -144,6 +144,15 @@ class SwapService {
 
   }
 
+  async deleteBTM(address) {
+    const addr = ethers.utils.getAddress(address)
+    try {
+      await this.contractInstance.removeMachine(address)
+    } finally {
+      return this
+    }
+  }
+
   async addBTM(address) {
     const addr = ethers.utils.getAddress(address)
     try {
