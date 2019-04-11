@@ -81,4 +81,27 @@ export default class Web3Service {
       return tx.from === account || tx.to === account
     })
   }
+
+  indexToHex(idx) {
+    return ethers.utils.bigNumberify(idx).toHexString()
+  }
+  // Accessing info for 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0 at
+  //       buy: 0x63e52fd1240234fcd07d6417b7a7e9db543d1a0dc64001527549dd18f53fcf0c, 7, 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0
+  //       sell: 0x4fcdf0e256e900d4b99384f82ff2063a536ffbc6a79e9d67538d8566b627e55c, 8, 0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0
+  mappingStorageIndex(slot, key) {
+    if (!ethers.utils.isHexString(slot)) {
+      slot = ethers.utils.bigNumberify(slot).toHexString()
+    }
+    if (!ethers.utils.isHexString(key)) {
+      key = ethers.utils.bigNumberify(key).toHexString()
+    }
+
+    const slotFormat = ethers.utils.hexZeroPad(slot, 64)
+    // Is equivalent to const keyFormat = ethers.utils.padZeros(key, 64)
+    const keyFormat = ethers.utils.hexZeroPad(key, 64)
+    // Is equivalent to ethers.utils.keccak256(keyFormat + slotFormat.substring(2))
+    const concat = ethers.utils.concat([keyFormat, slotFormat])
+    
+    return ethers.utils.keccak256(concat)
+  }
 }

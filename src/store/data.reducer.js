@@ -2,9 +2,11 @@
 const initialState = {
   hasContract: false,
   btms: [
-    { address: '0x909f74Ffdc223586d0d30E78016E707B6F5a45E2' , buy: '0.23', sell: '0.53' },
-    { address: '0x909f74Fassadsd86d0d30E78016E707B6F5a45E2' , buy: '0.56', sell: '0.23' },
-    { address: '0x909f74Ffdcasdsdsdsda0E78016E707B6F5a45E2' , buy: '0.32', sell: '0.43' }
+    {
+      address: '0x909f74Ffdc223586d0d30E78016E707B6F5a45E2' ,
+      buy: '0.23', // BN.js
+      sell: '0.53' // BN.js
+    }
   ],
   contractAddress: '',
   contractBalance: {
@@ -24,8 +26,14 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, contractBalance: { eth, baseToken } }
     }
     case 'SET_CONTRACT_ADDRESS': {
-      const { hasContract, contractAddress } = payload
-      return { ...state, hasContract, contractAddress }
+      const { hasContract, contractAddress, btms } = payload
+      console.log(btms)
+      return {
+        ...state,
+        hasContract,
+        contractAddress,
+        btms
+      }
     }
     case 'ADD_SUCCESS': {
       return state

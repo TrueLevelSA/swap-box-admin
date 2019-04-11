@@ -5,7 +5,7 @@ import { Box } from 'grommet'
 
 import { Form, Section, Modal, DIALOG_TYPE, DataTable } from 'components'
 
-const AdminPanel = ({ history, route, btms }) => {
+const AdminPanel = ({ history, route, btms = [] }) => {
   const openModal = (dialogType, params) => {
     history.push(route.path, { modal: true, dialog: dialogType, params: params })
   }
@@ -21,7 +21,11 @@ const AdminPanel = ({ history, route, btms }) => {
       content: btms.length > 0 ? (
           <DataTable
             edit={(btm) => openModal(DIALOG_TYPE.BTM_EDIT, btm)}
-            data={btms} />
+            data={btms.map(({ address, buy, sell }) => ({
+              address,
+              buy: buy.toString(),
+              sell: sell.toString()
+            })) } />
         ) : null
     },
     {

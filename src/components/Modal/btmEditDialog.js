@@ -16,8 +16,8 @@ const SFormField = styled(FormField)`
   & input { padding: 11px 0; }
   & span { margin-left: 0; }
 `
-function BtmEditDialog({ close, onSubmit, params }) {
-  const { address, buy, sell } = params
+function BtmEditDialog({ close, onSubmit, params: machineInfo }) {
+  const { address, buy, sell } = machineInfo    // Info is transformed in section datatable
   const [ buyerFee, setBuyerFee ] = useState(buy)
   const [ sellerFee, setSellerFee ] = useState(sell)
 
@@ -38,7 +38,11 @@ function BtmEditDialog({ close, onSubmit, params }) {
           </Text>
           <Box pad={{ top: 'medium'}}>
             <Form
-              onSubmit={() => onSubmit({ address, buyerFee, sellerFee })}>
+              onSubmit={() => onSubmit({
+                address,
+                buy: buyerFee,
+                sell: sellerFee
+              })}>
               <Box direction="row-responsive" gap="small" justify="between">
                 <SFormField
                   name="buyerFee"

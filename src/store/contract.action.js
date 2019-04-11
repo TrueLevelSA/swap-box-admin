@@ -1,4 +1,6 @@
+import { utils } from 'ethers'
 import { SwapService } from 'services'
+
 
 export function initContract() {
   return async (dispatch, getState) => {
@@ -6,8 +8,6 @@ export function initContract() {
     const { userAccount, networkName } = auth
     const { web3Service } = system
     const signer = await web3Service.getSigner()
-    console.log('Init Contract:', userAccount, networkName, web3Service)
-
 
     let contract;
     try {
@@ -31,11 +31,13 @@ export function setContractInfo() {
   return async (dispatch) => {
     const contract = SwapService
     const { eth, baseToken } = await contract.getBalances()
+    const machines = await contract.getBTMs()
     dispatch({
       type: 'SET_CONTRACT_ADDRESS',
       payload: {
         hasContract: contract.hasContract,
         contractAddress: contract.address,
+        btms: machines
       }
     })
 
@@ -99,11 +101,17 @@ export function addBTM(btmAddress) {
   }
 }
 
-export function editBTM(btm) {
+export function editBTM({ address, buy, sell }) {
+  buy = (buy * 100).toString()
+  sell = (sell * 100).toString()
+  console.log(buy, sell)
+  buy = utils.bigNumberify(buy)
+  sell = utils.bigNumberify(sell)
+  debugger
+
   return async (dispatch) => {
-    console.log('EDIT', btm)
     try {
-      await SwapService.editBTM(btm)
+      await SwapService.editBTM(address, buy, sell)
       dispatch({ type: 'EDIT_SUCCESS' })
     } finally {}
   }

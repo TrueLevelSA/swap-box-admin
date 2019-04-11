@@ -1,10 +1,10 @@
 import { ethers, Contract } from 'ethers'
 import _sortBy from 'lodash.sortby'
 
-import Web3Service from 'services'
+import { Web3Service, numberToBytes32 } from 'services'
 import settings from './settings.json'
 import source from './abi/Atola.json'
-import bytecode from './abi/AtolaDeployedBytecode.json'
+// import bytecode from './abi/AtolaDeployedBytecode.json'
 import erc20 from './abi/ERC20.json'
 
 
@@ -104,6 +104,7 @@ class SwapService {
   async attach(address) {
     try {
       this.contractInstance = await this.factory.attach(address)
+      window.Contract = this.contractInstance
     } finally {
       return this
     }
@@ -118,6 +119,31 @@ class SwapService {
     }
   }
 
+  async getBTMInfo(machine) {
+    return this.contractInstance.getMachine(machine)
+      .then(([address, buy, sell]) => ({
+        address,
+        buy,
+        sell
+      }))
+  }
+
+
+  async getBTMs() {
+    const promises = []
+    const hexLength = await this.service.getStorageAt(this.address, 4)
+    const len = ethers.utils.bigNumberify(hexLength).toNumber()
+
+    for (let i = 0; i < len; i++) {
+      const hexIndex = this.service.indexToHex(i)
+      promises.push(this.getBTMInfo(hexIndex))
+    }
+
+    const machines = await Promise.all(promises)
+    return machines
+
+  }
+
   async addBTM(address) {
     const addr = ethers.utils.getAddress(address)
     try {
@@ -127,10 +153,19 @@ class SwapService {
     }
   }
 
-  async editBTM({ address, buyerFee, sellerFee }) {
+  async editBTM(address, buy, sell) {
     const addr = ethers.utils.getAddress(address)
+    console.log('EDITING', buy, sell, addr)
+
     try {
-      // await this.contractInstance.addMachine(address)
+      const modify = this.contractInstance.modifyBtm(
+        addr,
+        buy.toHexString(),
+        sell.toHexString()
+      )
+    } catch(e) {
+      console.debug(e)
+      throw new Error(e)
     } finally {
       return this
     }
@@ -153,7 +188,6 @@ class SwapService {
         const decimals = await this.baseTokenContract.decimals.call()
         const token = ethers.utils.getAddress(this.baseTokenContract.address)
         const xchf = ethers.utils.parseUnits(amount, decimals) // Receives a BN in token decimals
-        console.log(token, xchf, xchf.toString())
         return this.contractInstance.withdrawTokens(token, xchf.toHexString())
     }
   }
