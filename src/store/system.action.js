@@ -8,11 +8,6 @@ export function initSystem(type) {
       try {
         const service = await new Web3Service().init(window.web3)
 
-        const slot = '3'
-        const key = '1'
-        const index = service.mappingStorageIndex(slot, key)
-        console.log('MAPPING', index)
-
         await dispatch(setService(service))
         await dispatch(setAuth(service))
 

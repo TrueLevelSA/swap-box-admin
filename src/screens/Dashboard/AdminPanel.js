@@ -19,13 +19,15 @@ const AdminPanel = ({ history, route, btms = [] }) => {
         onClick: () => openModal(DIALOG_TYPE.BTM_ADD)
       },
       content: btms.length > 0 ? (
-          <DataTable
-            edit={(btm) => openModal(DIALOG_TYPE.BTM_EDIT, btm)}
-            data={btms.map(({ address, buy, sell }) => ({
-              address,
-              buy: buy.toString(),
-              sell: sell.toString()
-            })) } />
+          <Box>
+            <DataTable
+              edit={(btm) => openModal(DIALOG_TYPE.BTM_EDIT, btm)}
+              data={btms.map(({ address, buy, sell }) => ({
+                address,
+                buy: buy.toString(),
+                sell: sell.toString()
+              })) } />
+          </Box>
         ) : null
     },
     {
