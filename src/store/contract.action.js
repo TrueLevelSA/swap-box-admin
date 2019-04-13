@@ -1,6 +1,8 @@
 import { utils } from 'ethers'
-import { SwapService } from 'services'
+import { toast } from 'react-toastify'
 
+import { SwapService } from 'services'
+import { sendTransaction, handleSigningError } from 'store'
 
 export function initContract() {
   return async (dispatch, getState) => {
@@ -18,7 +20,7 @@ export function initContract() {
         web3Service,
       )
       await dispatch({ type: 'SYSTEM_INIT_CONTRACT', payload: { contract } })
-      await dispatch(setContractInfo())
+      await dispatch(getContractInfo())
     } catch (e) {
       throw new Error(e)
     }
@@ -27,11 +29,12 @@ export function initContract() {
   }
 }
 // @TODO clean actions and only call this function to set contract data.
-export function setContractInfo() {
+export function getContractInfo() {
   return async (dispatch) => {
     const contract = SwapService
     const { eth, baseToken } = await contract.getBalances()
     const machines = await contract.getBTMs()
+    console.log('CONTRACT', machines, eth, baseToken)
     dispatch({
       type: 'SET_CONTRACT_ADDRESS',
       payload: {
@@ -92,33 +95,42 @@ export function deployContract() {
 }
 
 
-export function addBTM(btmAddress) {
+export function addBTM(btmAddress, close) {
   return async (dispatch) => {
+    const onRequest = () => close()
+    const onSuccess = () => dispatch(getContractInfo())
+
     try {
-      await SwapService.addBTM(btmAddress)
-      dispatch({ type: 'ADD_SUCCESS' })
-    } finally {}
+      const tx = await SwapService.addBTM(btmAddress)
+      dispatch(sendTransaction(tx, onRequest, onSuccess))
+    } catch (err) {
+      dispatch(handleSigningError(err, onRequest ))
+    }
   }
 }
 
-export function deleteBtm(btmAddress) {
+export function deleteBTM(btmAddress) {
   return async (dispatch) => {
+    const onRequest = () => close()
+    const onSuccess = () => dispatch(getContractInfo())
     try {
-      await SwapService.deleteBTM(btmAddress)
-      dispatch({ type: 'DELETE_SUCCESS' })
-    } finally {}
+      const tx = await SwapService.deleteBTM(btmAddress)
+      dispatch(sendTransaction(tx, onRequest, onSuccess))
+    } catch (err) {
+      dispatch(handleSigningError(err, onRequest))
+    }
   }
 }
 
-export function editBTM({ address, buy, sell }) {
+export function editBTM({ address: btmAddress, buy, sell }) {
   buy = utils.bigNumberify((buy * 100).toString())
   sell = utils.bigNumberify((sell * 100).toString())
 
   return async (dispatch) => {
-    try {
-      await SwapService.editBTM(address, buy, sell)
-      dispatch({ type: 'EDIT_SUCCESS' })
-    } finally {}
+    const tx = await SwapService.editBTM(btmAddress, buy, sell)
+    const onRequest = () => close()
+    const onSuccess = () => dispatch(getContractInfo())
+    dispatch(sendTransaction(tx, onRequest, onSuccess))
   }
 }
 

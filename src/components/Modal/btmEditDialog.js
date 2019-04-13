@@ -42,7 +42,7 @@ function BtmEditDialog({ close, onSubmit, params: machineInfo }) {
                 address,
                 buy: buyerFee,
                 sell: sellerFee
-              })}>
+              }).then(close)}>
               <Box direction="row-responsive" gap="small" justify="between">
                 <SFormField
                   name="buyerFee"

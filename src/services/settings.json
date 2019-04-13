@@ -1,4 +1,8 @@
 {
+  "system": {
+    "confirmationsToWaitFor": "1"
+  },
+
   "chain": {
     "kovan": {
       "fromBlock": 5216602,

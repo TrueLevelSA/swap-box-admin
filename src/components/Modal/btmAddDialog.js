@@ -36,7 +36,7 @@ function BtmAddDialog({ close, onSubmit }) {
           </Text>
           <Box pad={{ top: 'medium'}}>
             <Form
-              onSubmit={({ value }) => onSubmit(value)}>
+              onSubmit={({ value }) => onSubmit(value.btmAddress, close)}>
               <SFormField
                 style={{ flexGrow: '1' }}
                 name="btmAddress"
@@ -67,7 +67,8 @@ const mapStateToProps = ({ auth }) => ({
 // @TODO this component should be presentational
 // Once modal is abstracted we should no longer need a store.
 const mapDispatchToProps = dispatch => ({
-  onSubmit: ({ btmAddress }) => dispatch(addBTM(btmAddress))
+  onSubmit: (btmAddress, close) => dispatch(addBTM(btmAddress, close))
+
 })
 
 export default connect(

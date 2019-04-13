@@ -3,7 +3,7 @@ import { renderRoutes } from 'react-router-config'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { defaultProps, Box, Grid, Grommet } from 'grommet'
-import { ToastContainer, toast } from 'react-toastify'
+import { ToastContainer, Slide, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 import { GrommetTheme, theme } from 'theme'
@@ -19,9 +19,9 @@ const Wrapper = ({ children, ...props }) => (
 const SWrapper = styled(Wrapper)`
   width: ${theme.wrapper.maxWidth};
 `
-const SToastContainer = styled(ToastContainer)`
-  top: ${props => `${props.topPosition + 8}px`} !important;
-`
+// const SToastContainer = styled(ToastContainer)`
+//   top: ${props => `${props.topPosition + 8}px`} !important;
+// `
 
 class App extends Component {
   state = {
@@ -31,7 +31,6 @@ class App extends Component {
   componentDidMount() {
     const headerHeight = document.getElementById('header').clientHeight;
     this.setState({ headerHeight })
-    console.log(this.state)
   }
 
   isAdminPanel(pathname) {
@@ -41,7 +40,6 @@ class App extends Component {
   render() {
     const { route, networkName, userAccount, location } = this.props
     const { headerHeight } = this.state
-    console.log(headerHeight)
     // Grid has a unintuitive behaviour.
     // When fill is specified it will refuse overflow and sqaush the content.
     // Since we want the footer to be at the bottom of the page without
@@ -80,7 +78,8 @@ class App extends Component {
             </Box>
           </Grid>
         </Grommet>
-        <SToastContainer
+        <ToastContainer
+          transition={Slide}
           topPosition={this.state.headerHeight}
           toastClassName="grommet-toast"
           position={toast.POSITION.TOP_RIGHT}
@@ -88,7 +87,6 @@ class App extends Component {
           pauseOnFocusLoss={true}
           pauseOnHover={true}
           autoClose={8000}
-          newestOnTop={true}
         />
       </>
     )

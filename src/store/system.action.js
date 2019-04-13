@@ -7,7 +7,7 @@ export function initSystem(type) {
     if (type === 'METAMASK') {
       try {
         const service = await new Web3Service().init(window.web3)
-
+        window.SERVICE = service
         await dispatch(setService(service))
         await dispatch(setAuth(service))
 

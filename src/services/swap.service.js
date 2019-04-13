@@ -145,26 +145,16 @@ class SwapService {
 
   async deleteBTM(address) {
     const addr = ethers.utils.getAddress(address)
-    try {
-      await this.contractInstance.removeMachine(address)
-    } finally {
-      return this
-    }
+    return this.contractInstance.removeMachine(address)
   }
 
   async addBTM(address) {
     const addr = ethers.utils.getAddress(address)
-    try {
-      await this.contractInstance.addMachine(address)
-    } finally {
-      return this
-    }
+    return this.contractInstance.addMachine(address)
   }
 
   async editBTM(address, buy, sell) {
     const addr = ethers.utils.getAddress(address)
-    console.log('EDITING', buy, sell, addr)
-
     try {
       const modify = this.contractInstance.modifyBtm(
         addr,
@@ -172,7 +162,7 @@ class SwapService {
         sell.toHexString()
       )
     } catch(e) {
-      console.debug(e)
+      console.error('Edit', e)
       throw new Error(e)
     } finally {
       return this

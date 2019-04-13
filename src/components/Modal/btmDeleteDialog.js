@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 
 import { Button, EthAddress } from 'components'
-import { deleteBtm } from 'store'
+import { deleteBTM } from 'store'
 
 function BtmDeleteDialog({ close, onDelete, params: machineInfo }) {
   const { address } = machineInfo
@@ -33,7 +33,7 @@ function BtmDeleteDialog({ close, onDelete, params: machineInfo }) {
             <Box direction="row" justify="end">
               <Button
                 label="Delete BTM"
-                onClick={() => onDelete(address)}
+                onClick={() => onDelete(address).then(close)}
                 margin={{ top: 'medium', bottom: 'small' }}
                 color="status-critical"/>
             </Box>
@@ -47,7 +47,7 @@ function BtmDeleteDialog({ close, onDelete, params: machineInfo }) {
 // @TODO this component should be presentational
 // Once modal is abstracted we should no longer need a store.
 const mapDispatchToProps = dispatch => ({
-  onDelete: (btm) => dispatch(deleteBtm(btm))
+  onDelete: (btm) => dispatch(deleteBTM(btm))
 })
 
 export default connect(

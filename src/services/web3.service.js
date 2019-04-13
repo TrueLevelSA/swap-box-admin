@@ -65,6 +65,10 @@ export default class Web3Service {
     return this.provider.getBalance(address)
   }
 
+  waitForTransaction(txHash) {
+    return this.provider.waitForTransaction(txHash)
+  }
+
   async getHistory(account, from, until) {
     let txPromises = [];
     for (from; from <= until; from++) {
