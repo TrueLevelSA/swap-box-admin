@@ -16,7 +16,7 @@ export const theme = {
 export const GrommetTheme = {
   global: {
     font: {
-      family: 'Lekton, sans-serif',
+      family: '"Lekton", sans-serif',
       size: '16px',
       height: '20px'
     }

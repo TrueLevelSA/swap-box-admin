@@ -1,8 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Box } from 'grommet'
+import { toast } from 'react-toastify'
 import styled from 'styled-components'
 
+import { Button } from 'components'
 import { pathByName, routes } from 'routes'
 import gitlabSVG from './gitlab-icon-1-color-black-rgb.svg'
 
@@ -12,6 +14,9 @@ const SImg = styled('img')`
   margin-bottom: -0.2rem;
 `
 
+const toastMe = () => {
+    toast('Hello World')
+}
 
 export default () => {
   const isDev = true // @TODO expose links only in dev environment
@@ -23,6 +28,7 @@ export default () => {
             <Link to={paths.deploy}>Deploy</Link>
             <Link to={paths.admin}>Admin</Link>
             <Link to={paths.connect}>Connect</Link>
+            <Button onClick={toastMe}>Toast</Button>
           </Box>
         )
       }

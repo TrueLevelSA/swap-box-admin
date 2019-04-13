@@ -128,7 +128,6 @@ class SwapService {
       }))
   }
 
-
   async getBTMs() {
     const promises = []
     const hexLength = await this.service.getStorageAt(this.address, 4)

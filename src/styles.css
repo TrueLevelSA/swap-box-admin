@@ -10,3 +10,7 @@ form > input {
   padding-left: 0;
   padding-right: 0;
 }
+
+.grommet-toast {
+  font-family: 'Lekton', sans-serif !important;
+}

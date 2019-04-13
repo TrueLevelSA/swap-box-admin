@@ -17,9 +17,11 @@ class Root extends Component {
   render() {
     const { isAuthenticated } = this.props
     return (
+      <>
         <BrowserRouter>
           { renderRoutes(routes, { isAuthenticated }) }
         </BrowserRouter>
+      </>
     )
   }
 }
