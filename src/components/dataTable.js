@@ -11,13 +11,14 @@ const SDataTable = styled(DataTable)`
   th:nth-of-type(2), th:nth-of-type(3){ text-align: center; }
   th:nth-of-type(1) { width: 40% !important; }
   th:nth-of-type(4), th:nth-of-type(5) { width: 4rem !important; }
+  th:last-of-type { width: 1px; visibility: hidden; }
 `
 export default ({ columns, data, onEdit, onDelete }) => {
+  data = data.map((elem, idx) => Object.assign({}, elem, { key: idx }))
   const defaultColumns = [
     {
       property: 'address',
       header: 'BTM Address',
-      primary: true,
       render: btm => (<EthAddress address={btm.address} />)
     },
     {
@@ -61,6 +62,11 @@ export default ({ columns, data, onEdit, onDelete }) => {
             hoverIndicator />
         </Box>
       )
+    },
+    {
+      property: 'key',
+      primary: true,
+      render: () => (<></>)
     },
   ]
 
