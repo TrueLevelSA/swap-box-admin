@@ -1,9 +1,7 @@
 import React from 'react'
-import styled from 'styled-components'
 import { Box, Heading, Text } from 'grommet'
 
 import { Button } from 'components'
-
 
 const normalSection = ({ title, description, action, content, extra = null }) => (
   <>
@@ -42,7 +40,6 @@ const normalSection = ({ title, description, action, content, extra = null }) =>
     </Box>
   </>
 )
-
 
 const dangerSection = ({ title, description, action: { onClick, label } }) => (
   <>

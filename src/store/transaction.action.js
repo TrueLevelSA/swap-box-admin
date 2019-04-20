@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import { Settings } from 'services'
 import { TxToast } from 'components'
 
-export function sendTransaction(tx, onRequest, onSuccess) {
+export function sendTransaction(tx, onRequest = () => {}, onSuccess) {
   return async (dispatch) => {
     const { hash } = tx
     let toastId = null;
@@ -19,14 +19,13 @@ export function sendTransaction(tx, onRequest, onSuccess) {
 
       toast.update(toastId, {
         type: toast.TYPE.SUCCESS,
-        render: <TxToast hash={hash} message={"Transaction confirmed!"} />
+        render: <TxToast hash={hash} message={"Transaction confirmed!"} confirmation={confirmation}/>
       })
 
       await onSuccess()
       // toast.dismiss(toastId)
     } catch (e) {
-      console.log('transaction error', e)
-      throw new Error(e)
+      console.debug('Transaction error', e)
       toast.update(toastId, {
         type: toast.TYPE.ERROR,
         render: <TxToast hash={hash} message={`Error when sending transaction: ${e}`} />
@@ -35,11 +34,11 @@ export function sendTransaction(tx, onRequest, onSuccess) {
   }
 }
 
-export function handleSigningError(error, onError) {
+export function handleSigningError(error, onError = () => {}) {
   return async (dispatch) => {
     await onError()
-    let toastId = toast.error(
-      () => <TxToast error={error.message} message={"Error when creating transaction"} />
+    toast.error(
+      () => <TxToast error={error.message} message={"Failed to prepare transaction"} />
     )
   }
 }

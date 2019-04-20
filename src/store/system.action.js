@@ -1,5 +1,4 @@
 import { Web3Service } from 'services'
-import { initContract } from './contract.action'
 
 export function initSystem(type) {
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { BrowserRouter, Route, Redirect } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import { renderRoutes } from 'react-router-config'
 import { hot } from 'react-hot-loader/root'
 

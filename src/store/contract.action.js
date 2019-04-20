@@ -1,5 +1,4 @@
 import { utils } from 'ethers'
-import { toast } from 'react-toastify'
 
 import { SwapService } from 'services'
 import { sendTransaction, handleSigningError } from 'store'
@@ -95,11 +94,9 @@ export function deployContract() {
 }
 
 
-export function addBTM(btmAddress, close) {
+export function addBTM(btmAddress, onRequest) {
   return async (dispatch) => {
-    const onRequest = () => close()
     const onSuccess = () => dispatch(getContractInfo())
-
     try {
       const tx = await SwapService.addBTM(btmAddress)
       dispatch(sendTransaction(tx, onRequest, onSuccess))
@@ -109,9 +106,8 @@ export function addBTM(btmAddress, close) {
   }
 }
 
-export function deleteBTM(btmAddress) {
+export function deleteBTM(btmAddress, onRequest) {
   return async (dispatch) => {
-    const onRequest = () => close()
     const onSuccess = () => dispatch(getContractInfo())
     try {
       const tx = await SwapService.deleteBTM(btmAddress)
@@ -122,13 +118,12 @@ export function deleteBTM(btmAddress) {
   }
 }
 
-export function editBTM({ address: btmAddress, buy, sell }) {
+export function editBTM({ address: btmAddress, buy, sell }, onRequest) {
   buy = utils.bigNumberify((buy * 100).toString())
   sell = utils.bigNumberify((sell * 100).toString())
 
   return async (dispatch) => {
     const tx = await SwapService.editBTM(btmAddress, buy, sell)
-    const onRequest = () => close()
     const onSuccess = () => dispatch(getContractInfo())
     dispatch(sendTransaction(tx, onRequest, onSuccess))
   }

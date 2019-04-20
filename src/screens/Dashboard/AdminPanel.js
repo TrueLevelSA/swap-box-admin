@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Box } from 'grommet'
 
-import { Form, Section, Modal, DIALOG_TYPE, DataTable } from 'components'
+import { Section, DIALOG_TYPE, DataTable } from 'components'
 
 const AdminPanel = ({ history, route, btms = [] }) => {
   const openModal = (dialogType, params) => {

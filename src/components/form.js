@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Form, FormField } from 'grommet'
 
-import { TextInput, Button } from './index'
+import { Button } from './index'
 
 const SForm = ({ label, actionLabel, onSubmit }) => (
   <Form onSubmit={onSubmit}>

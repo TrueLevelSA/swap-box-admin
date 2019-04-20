@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { Heading, Text, Select, Box, Form, FormField, } from 'grommet'
-import { FormClose } from 'grommet-icons'
-import styled from 'styled-components'
 import { connect } from 'react-redux'
+import styled from 'styled-components'
+import { Heading, Text, Box, Form, FormField, } from 'grommet'
+import { FormClose } from 'grommet-icons'
 
 import { Button, EthAddress } from 'components'
 import { editBTM } from 'store'

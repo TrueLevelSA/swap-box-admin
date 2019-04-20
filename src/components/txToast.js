@@ -1,6 +1,6 @@
 import React from 'react'
-import { Box, Text } from 'grommet'
 import styled from 'styled-components'
+import { Text } from 'grommet'
 
 import { utils } from 'services'
 

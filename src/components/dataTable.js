@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Box, DataTable, Text, defaultProps } from 'grommet'
+import { DataTable, Text, defaultProps } from 'grommet'
 
 import { Button, EthAddress } from 'components'
 

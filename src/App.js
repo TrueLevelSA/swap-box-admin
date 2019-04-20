@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { renderRoutes } from 'react-router-config'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { defaultProps, Box, Grid, Grommet } from 'grommet'
+import { Box, Grid, Grommet } from 'grommet'
 import { ToastContainer, Slide, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -38,7 +38,7 @@ class App extends Component {
   }
 
   render() {
-    const { route, networkName, userAccount, location } = this.props
+    const { route, networkName, userAccount } = this.props
     const { headerHeight } = this.state
     // Grid has a unintuitive behaviour.
     // When fill is specified it will refuse overflow and sqaush the content.
@@ -80,7 +80,7 @@ class App extends Component {
         </Grommet>
         <ToastContainer
           transition={Slide}
-          topPosition={this.state.headerHeight}
+          topPosition={headerHeight}
           toastClassName="grommet-toast"
           position={toast.POSITION.TOP_RIGHT}
           draggablePercent={60}

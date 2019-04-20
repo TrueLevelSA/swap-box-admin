@@ -1,7 +1,7 @@
-import React, { Component, useState } from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { Box, Heading } from 'grommet'
-import { connect } from 'react-redux'
 
 import { initSystem } from 'store'
 import { WalletConnect } from 'components'

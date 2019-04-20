@@ -7,7 +7,6 @@ import { ethers } from 'ethers'
 */
 
 export default class Web3Service {
-  constructor() {}
 
   async init(web3) {
     if (web3 !== undefined) {
@@ -20,9 +19,7 @@ export default class Web3Service {
         return this
       } catch(err) {
         throw new Error('Auth failure', err)
-        return this
       }
-
 
     } else {
       console.debug('web3 is undefined')

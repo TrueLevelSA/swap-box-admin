@@ -1,7 +1,6 @@
 import { ethers, Contract } from 'ethers'
 import _sortBy from 'lodash.sortby'
 
-import { Web3Service, numberToBytes32 } from 'services'
 import settings from './settings.json'
 import source from './abi/Atola.json'
 // import bytecode from './abi/AtolaDeployedBytecode.json'
@@ -113,7 +112,7 @@ class SwapService {
   async transferOwnership(receiver) {
     const addr = ethers.utils.getAddress(receiver)
     try {
-      await this.contractInstance.transferOwnership(receiver)
+      await this.contractInstance.transferOwnership(addr)
     } finally {
       return this
     }
@@ -145,48 +144,38 @@ class SwapService {
 
   async deleteBTM(address) {
     const addr = ethers.utils.getAddress(address)
-    return this.contractInstance.removeMachine(address)
+    return this.contractInstance.removeMachine(addr)
   }
 
   async addBTM(address) {
     const addr = ethers.utils.getAddress(address)
-    return this.contractInstance.addMachine(address)
+    return this.contractInstance.addMachine(addr)
   }
 
   async editBTM(address, buy, sell) {
     const addr = ethers.utils.getAddress(address)
-    try {
-      const modify = this.contractInstance.modifyBtm(
+    return this.contractInstance.modifyBtm(
         addr,
         buy.toHexString(),
         sell.toHexString()
       )
-    } catch(e) {
-      console.error('Edit', e)
-      throw new Error(e)
-    } finally {
-      return this
-    }
   }
 
   async withdraw(amount, currency) {
     currency = currency.toUpperCase()
-    if (currency !== 'ETH' && currency !== 'XCHF') {
-      throw new Error(`Currency ${currency} is not accepted by this contract`)
-    }
 
-    // amount = ethers.utils.bigNumberify(amount).toHexString()
     switch(currency) {
       case 'ETH': {
         const eth = ethers.utils.parseEther(amount) // Receives a BN in wei
         return this.contractInstance.withdrawEth(eth.toHexString(), { gasLimit: 50000 })
       }
-
       case 'XCHF':
         const decimals = await this.baseTokenContract.decimals.call()
         const token = ethers.utils.getAddress(this.baseTokenContract.address)
         const xchf = ethers.utils.parseUnits(amount, decimals) // Receives a BN in token decimals
         return this.contractInstance.withdrawTokens(token, xchf.toHexString())
+      default:
+        throw new Error(`Currency ${currency} is not accepted by this contract`)
     }
   }
 

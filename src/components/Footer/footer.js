@@ -41,12 +41,12 @@ export default () => {
             <Link to={paths.deploy}>Deploy</Link>
             <Link to={paths.admin}>Admin</Link>
             <Link to={paths.connect}>Connect</Link>
-            {/*<Button onClick={() => toastMe(id)}>Update</Button>*/}
-
+            <Button onClick={(id) => toastMe(id)}>Update</Button>
           </Box>
         )
       }
-      <a href="https://gitlab.com/atola/swap-box-admin" target="_blank">
+      <a target="_blank" rel="noopener noreferrer"
+        href="https://gitlab.com/atola/swap-box-admin">
         <SImg src={gitlabSVG} />
       </a>
     </Box>

@@ -1,6 +1,6 @@
 import React from 'react'
-import { Layer, Button, Box, Icon, Heading, } from 'grommet'
 import styled from 'styled-components'
+import { Button, Box, Heading, } from 'grommet'
 
 const SIcon = styled('img')`
   width: 45px;

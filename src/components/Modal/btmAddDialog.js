@@ -1,8 +1,8 @@
 import React from 'react'
-import { Heading, Text, Select, Box, Form, FormField, } from 'grommet'
-import { FormClose } from 'grommet-icons'
-import styled from 'styled-components'
 import { connect } from 'react-redux'
+import styled from 'styled-components'
+import { Heading, Text, Box, Form, FormField, } from 'grommet'
+import { FormClose } from 'grommet-icons'
 
 import { Button } from 'components'
 import { addBTM } from 'store'
