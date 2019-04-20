@@ -1,3 +1,4 @@
+import { utils } from 'ethers'
 
 export const getEtherscanLink = (networkType, hash) => {
   let url;
@@ -12,4 +13,8 @@ export const getEtherscanLink = (networkType, hash) => {
       url = 'https://example.com'
   }
   return `${url}/${hash}`
+}
+
+export const formatCurrency = (wei) => {
+  return utils.formatUnits(wei, 18, { commify: true })
 }
