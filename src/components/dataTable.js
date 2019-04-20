@@ -5,7 +5,9 @@ import { Box, DataTable, Text, defaultProps } from 'grommet'
 import { Button, EthAddress } from 'components'
 
 const SDataTable = styled(DataTable)`
-  tbody > tr:nth-child(odd) { background: ${defaultProps.theme.global.colors['light-3']}};
+  tbody > tr:nth-child(odd) {
+    background: ${defaultProps.theme.global.colors['light-3']}
+  };
   table-layout: fixed;
   width: 100%;
   th:nth-of-type(2), th:nth-of-type(3){ text-align: center; }
@@ -14,53 +16,52 @@ const SDataTable = styled(DataTable)`
   th:last-of-type { width: 1px; visibility: hidden; }
 `
 export default ({ columns, data, onEdit, onDelete }) => {
-  data = data.map((elem, idx) => Object.assign({}, elem, { key: idx }))
+  // Datatable requires a unique attribute to use as React Key.
+  // 1. We create the key
+  // 2. Since we use css to hightlight odd rows, instead of refs, we use the key
+  // to determine weither if we need to change the EthAddress hover style.
+  data = data.map((elem, idx) => (
+    Object.assign({}, elem, { key: idx, isOdd: (idx % 2 === 0) })
+  ))
+
   const defaultColumns = [
     {
       property: 'address',
       header: 'BTM Address',
-      render: btm => (<EthAddress address={btm.address} />)
+      render: (btm, idx, ...args) => (<EthAddress address={btm.address} invertStyle={btm.isOdd}/>)
     },
     {
       property: 'buy',
       header: 'Buy',
-      render: btm => (
-        <Box alignSelf="center">
-          <Text textAlign="center">{btm.buy}</Text>
-        </Box>
-      )
+      render: btm => (<Text>{btm.buy}</Text>),
+      align: 'center',
     },
     {
       property: 'sell',
       header: 'Sell',
-      render: btm => (
-        <Box alignSelf="center">
-          <Text textAlign="center">{btm.sell}</Text>
-        </Box>
-      )
+      render: btm => (<Text>{btm.sell}</Text>),
+      align: 'center',
     },
     {
       property: 'edit',
+      align: 'center',
       render: (datum) => (
-        <Box alignSelf="center">
-          <Button
-            plain
-            label={<Text>edit</Text>}
-            onClick={() => onEdit(datum)}
-            hoverIndicator />
-        </Box>
+        <Button
+          plain
+          label={<Text>edit</Text>}
+          onClick={() => onEdit(datum)}
+          hoverIndicator />
       )
     },
     {
       property: 'delete',
+      align: 'center',
       render: (datum) => (
-        <Box alignSelf="center">
-          <Button
-            plain
-            label={<Text>del</Text>}
-            onClick={() => onDelete(datum)}
-            hoverIndicator />
-        </Box>
+        <Button
+          plain
+          label={<Text>del</Text>}
+          onClick={() => onDelete(datum)}
+          hoverIndicator />
       )
     },
     {

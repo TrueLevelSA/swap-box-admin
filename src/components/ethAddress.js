@@ -6,7 +6,7 @@ import styled from 'styled-components'
 const SContainer = styled(Box)`
   display: inline;
   &:hover {
-    background: ${defaultProps.theme.global.colors['light-3']};
+    background: ${ props => (props.invertStyle ? 'white' : defaultProps.theme.global.colors['light-3'])};
   }
 `
 const SText = styled(Text)`
@@ -25,8 +25,14 @@ const addressEnd = (address) => (
   `${address.substr(addrLength - Math.floor(visible / 2), addrLength) }`
 )
 
-export default ({ address = '', bold = false, inline = false, size = 'medium' }) => (
-  <SContainer pad={inline ? 'small' : 'xsmall'} round="xsmall" onClick={() => copy(address)}>
+export default ({
+  size = 'medium',
+  address = '',
+  invertStyle = false,
+  bold = false,
+  inline = false,
+}) => (
+  <SContainer invertStyle={invertStyle} pad={inline ? 'small' : 'xsmall'} round="xsmall" onClick={() => copy(address)}>
     <Text size={size} weight={bold ? 'bold' : 'normal' } >{addressStart(address)}</Text>
     <SText size={size} weight={bold ? 'bold' : 'normal' } >...</SText>
     <Text size={size} weight={bold ? 'bold' : 'normal' } >{addressEnd(address)}</Text>
