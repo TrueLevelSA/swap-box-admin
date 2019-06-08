@@ -1,20 +1,20 @@
-import { utils } from 'ethers'
+import { utils } from 'ethers';
 
 export const getEtherscanLink = (networkType, hash) => {
   let url;
-  switch(networkType) {
+  switch (networkType) {
     case 'mainnet':
-      url = 'https://etherscan.io'
+      url = 'https://etherscan.io';
       break;
     case 'ropsten':
-      url = 'https://ropsten.etherscan.io'
+      url = 'https://ropsten.etherscan.io';
       break;
     default:
-      url = 'https://example.com'
+      url = 'https://example.com';
   }
-  return `${url}/${hash}`
-}
+  return `${url}/${hash}`;
+};
 
-export const formatCurrency = (wei) => {
-  return utils.formatUnits(wei, 18, { commify: true })
-}
+export const formatCurrency = wei => {
+  return utils.formatUnits(wei, 18, { commify: true, pad: true });
+};
