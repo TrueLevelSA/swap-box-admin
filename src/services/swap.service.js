@@ -1,10 +1,10 @@
-import { ethers, Contract } from "ethers";
-import _sortBy from "lodash.sortby";
+import { ethers, Contract } from 'ethers';
+import _sortBy from 'lodash.sortby';
 
-import settings from "./settings.json";
-import source from "./abi/Atola.json";
+import settings from './settings.json';
+import source from './abi/Atola.json';
 // import bytecode from './abi/AtolaDeployedBytecode.json'
-import erc20 from "./abi/ERC20.json";
+import erc20 from './abi/ERC20.json';
 
 class SwapService {
   constructor() {
@@ -15,7 +15,7 @@ class SwapService {
       this.account = null;
       this.factory = null;
       this.service = null;
-      this.chain = settings.chain["localhost"]; // @TODO should be networkName
+      this.chain = settings.chain['ropsten']; // @TODO should be networkName
 
       // ES6 Singleton pattern
       // By adding the extra step of holding a reference to the instance,
@@ -46,7 +46,7 @@ class SwapService {
   }
 
   lastestContractAddress(contracts = []) {
-    const sorted = _sortBy(contracts, ["blockNumber"]);
+    const sorted = _sortBy(contracts, ['blockNumber']);
     const [latest] = sorted.slice(-1);
     if (latest) {
       return latest.creates;
@@ -76,7 +76,7 @@ class SwapService {
       // is used only for this project. Find a solution before deploying
       // .filter(tx => tx.data === bytecode.latest)     // That correspond to Atola
     } catch (e) {
-      console.debug("No deployed contracts found", e);
+      console.debug('No deployed contracts found', e);
     }
   }
 
@@ -97,7 +97,7 @@ class SwapService {
 
     return {
       eth: ethBalance, // ether.js transforms into a BN.js
-      baseToken: baseTokenBalance // idem
+      baseToken: baseTokenBalance, // idem
     };
   }
 
@@ -142,7 +142,7 @@ class SwapService {
       .then(([address, buy, sell]) => ({
         address,
         buy,
-        sell
+        sell,
       }));
   }
 
@@ -183,13 +183,13 @@ class SwapService {
     currency = currency.toUpperCase();
 
     switch (currency) {
-      case "ETH": {
+      case 'ETH': {
         const eth = ethers.utils.parseEther(amount); // Receives a BN in wei
         return this.contractInstance.withdrawEth(eth.toHexString(), {
-          gasLimit: 50000
+          gasLimit: 50000,
         });
       }
-      case "XCHF":
+      case 'XCHF':
         const decimals = await this.baseTokenContract.decimals.call();
         const token = ethers.utils.getAddress(this.baseTokenContract.address);
         const xchf = ethers.utils.parseUnits(amount, decimals); // Receives a BN in token decimals
