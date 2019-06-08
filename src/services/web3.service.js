@@ -7,6 +7,8 @@ import { ethers } from 'ethers';
 */
 
 export default class Web3Service {
+  INITIALISED = false;
+
   async init(web3) {
     if (web3 !== undefined) {
       this.provider = new ethers.providers.Web3Provider(web3.currentProvider);
@@ -14,7 +16,6 @@ export default class Web3Service {
       try {
         await this.provider._web3Provider.enable();
         this.signer = this.provider.getSigner();
-        console.debug('Connected to', this.provider);
         return this;
       } catch (err) {
         throw new Error('Auth failure', err);
