@@ -28,7 +28,6 @@ export default (state = initialState, { type, payload }) => {
     }
     case 'SET_CONTRACT_ADDRESS': {
       const { hasContract, contractAddress, btms } = payload;
-      console.log(btms);
       return {
         ...state,
         hasContract,

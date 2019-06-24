@@ -69,7 +69,7 @@ export default class Web3Service {
     }
 
     const txHistory = await Promise.all(txPromises);
-    console.log(txHistory);
+    console.debug(txHistory);
     return txHistory.filter(tx => {
       return tx.from === account || tx.to === account;
     });

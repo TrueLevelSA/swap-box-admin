@@ -10,7 +10,6 @@ import { initContract } from 'store';
 class Dashboard extends Component {
   async componentDidMount() {
     await initContract();
-    // console.log('after init', this.props.hasContract);
   }
 
   render() {

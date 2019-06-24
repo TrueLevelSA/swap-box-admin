@@ -1,14 +1,14 @@
-import { utils } from 'ethers'
+import { utils } from 'ethers';
 
-import { SwapService } from 'services'
-import { sendTransaction, handleSigningError } from 'store'
+import { SwapService } from 'services';
+import { sendTransaction, handleSigningError } from 'store';
 
 export function initContract() {
   return async (dispatch, getState) => {
-    const { system, auth } = getState()
-    const { userAccount, networkName } = auth
-    const { web3Service } = system
-    const signer = await web3Service.getSigner()
+    const { system, auth } = getState();
+    const { userAccount, networkName } = auth;
+    const { web3Service } = system;
+    const signer = await web3Service.getSigner();
 
     let contract;
     try {
@@ -16,134 +16,131 @@ export function initContract() {
         signer,
         userAccount,
         networkName,
-        web3Service,
-      )
-      await dispatch({ type: 'SYSTEM_INIT_CONTRACT', payload: { contract } })
-      await dispatch(getContractInfo())
+        web3Service
+      );
+      await dispatch({ type: 'SYSTEM_INIT_CONTRACT', payload: { contract } });
+      await dispatch(getContractInfo());
     } catch (e) {
-      throw new Error(e)
+      throw new Error(e);
     }
-
-
-  }
+  };
 }
 // @TODO clean actions and only call this function to set contract data.
 export function getContractInfo() {
-  return async (dispatch) => {
-    const contract = SwapService
-    const { eth, baseToken } = await contract.getBalances()
-    const machines = await contract.getBTMs()
-    console.log('CONTRACT', machines, eth, baseToken)
+  return async dispatch => {
+    const contract = SwapService;
+    const { eth, baseToken } = await contract.getBalances();
+    const machines = await contract.getBTMs();
     dispatch({
       type: 'SET_CONTRACT_ADDRESS',
       payload: {
         hasContract: contract.hasContract,
         contractAddress: contract.address,
-        btms: machines
-      }
-    })
+        btms: machines,
+      },
+    });
 
     dispatch({
       type: 'SET_CONTRACT_BALANCE',
       payload: { eth, baseToken },
-    })
-  }
+    });
+  };
 }
 
 export function findExistingContract() {
-  return async (dispatch) => {
+  return async dispatch => {
     try {
-      await SwapService.findDeployedContractAddress()
-      const contractAddress = SwapService.lastestContractAddress()
+      await SwapService.findDeployedContractAddress();
+      const contractAddress = SwapService.lastestContractAddress();
       dispatch({
         type: 'SET_CONTRACT_ADDRESS',
-        payload: { hasContract: true, contractAddress }
-      })
+        payload: { hasContract: true, contractAddress },
+      });
     } catch (err) {
-      throw new Error(err)
+      throw new Error(err);
     }
-  }
+  };
 }
 
 export function fetchExistingContract(address) {
-  return async (dispatch) => {
+  return async dispatch => {
     try {
-      const deployed = await SwapService.attach(address)
+      const deployed = await SwapService.attach(address);
       dispatch({
         type: 'ATTACH_SUCCESS',
-        payload: { deployed }
-      })
+        payload: { deployed },
+      });
     } catch (err) {
-      throw new Error(err)
+      throw new Error(err);
     }
-  }
+  };
 }
 
 export function deployContract() {
-  return async (dispatch) => {
+  return async dispatch => {
     try {
-      const deployed = await SwapService.deploy()
+      const deployed = await SwapService.deploy();
       dispatch({
         type: 'SET_CONTRACT_ADDRESS',
-        payload: { hasContract: true, contractAddress: deployed.address }
-      })
+        payload: { hasContract: true, contractAddress: deployed.address },
+      });
     } catch (err) {
-      throw new Error(err)
+      throw new Error(err);
     }
-  }
+  };
 }
 
-
 export function addBTM(btmAddress, onRequest) {
-  return async (dispatch) => {
-    const onSuccess = () => dispatch(getContractInfo())
+  return async dispatch => {
+    const onSuccess = () => dispatch(getContractInfo());
     try {
-      const tx = await SwapService.addBTM(btmAddress)
-      dispatch(sendTransaction(tx, onRequest, onSuccess))
+      const tx = await SwapService.addBTM(btmAddress);
+      dispatch(sendTransaction(tx, onRequest, onSuccess));
     } catch (err) {
-      dispatch(handleSigningError(err, onRequest ))
+      dispatch(handleSigningError(err, onRequest));
     }
-  }
+  };
 }
 
 export function deleteBTM(btmAddress, onRequest) {
-  return async (dispatch) => {
-    const onSuccess = () => dispatch(getContractInfo())
+  return async dispatch => {
+    const onSuccess = () => dispatch(getContractInfo());
     try {
-      const tx = await SwapService.deleteBTM(btmAddress)
-      dispatch(sendTransaction(tx, onRequest, onSuccess))
+      const tx = await SwapService.deleteBTM(btmAddress);
+      dispatch(sendTransaction(tx, onRequest, onSuccess));
     } catch (err) {
-      dispatch(handleSigningError(err, onRequest))
+      dispatch(handleSigningError(err, onRequest));
     }
-  }
+  };
 }
 
 export function editBTM({ address: btmAddress, buy, sell }, onRequest) {
-  buy = utils.bigNumberify((buy * 100).toString())
-  sell = utils.bigNumberify((sell * 100).toString())
+  buy = utils.bigNumberify((buy * 100).toString());
+  sell = utils.bigNumberify((sell * 100).toString());
 
-  return async (dispatch) => {
-    const tx = await SwapService.editBTM(btmAddress, buy, sell)
-    const onSuccess = () => dispatch(getContractInfo())
-    dispatch(sendTransaction(tx, onRequest, onSuccess))
-  }
+  return async dispatch => {
+    const tx = await SwapService.editBTM(btmAddress, buy, sell);
+    const onSuccess = () => dispatch(getContractInfo());
+    dispatch(sendTransaction(tx, onRequest, onSuccess));
+  };
 }
 
 export function withdraw({ amount, currency }) {
-  return async (dispatch) => {
+  return async dispatch => {
     try {
-      await SwapService.withdraw(amount, currency)
-      dispatch({ type: 'WITHDRAW_SUCCESS' })
-    } finally {}
-  }
+      await SwapService.withdraw(amount, currency);
+      dispatch({ type: 'WITHDRAW_SUCCESS' });
+    } finally {
+    }
+  };
 }
 
 export function transferOwnership(owner) {
   return async (dispatch, getState) => {
-    console.log('TRANSFER', owner)
     try {
-      await SwapService.transferOwnership(owner)
-      dispatch({ type: 'TRANSFER_SUCCESS' })
-    } finally {}
-  }
+      await SwapService.transferOwnership(owner);
+      dispatch({ type: 'TRANSFER_SUCCESS' });
+    } finally {
+    }
+  };
 }

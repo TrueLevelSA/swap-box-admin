@@ -9,6 +9,11 @@ import { initSystem } from 'store';
 
 class Root extends Component {
   componentDidMount() {
+    // Check if we are already authentified with MM.
+    // If so initiaslize the app immediately.
+    // also, we're in a CRA project so tell linter to ignore global
+    // https://facebook.github.io/create-react-app/docs/using-global-variables
+    // eslint-disable-next-line
     if (ethereum && ethereum.selectedAddress) {
       this.props.initSystem('METAMASK');
     }
