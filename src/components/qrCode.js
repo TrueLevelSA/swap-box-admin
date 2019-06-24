@@ -1,11 +1,8 @@
 import React from 'react';
 import QRCode from 'qrcode.react';
-import { Link } from 'react-router-dom';
 import { defaultProps } from 'grommet';
 import styled from 'styled-components';
-
 import { theme } from 'theme';
-import { pathByName, routes } from 'routes';
 
 const SContainer = styled('div')`
   border: 1px solid
@@ -21,7 +18,6 @@ const SContainer = styled('div')`
 const SQRCode = styled(QRCode)``;
 
 export default ({ address, borderColor }) => {
-  const paths = pathByName(routes);
   return (
     <SContainer borderColor={borderColor}>
       {address ? (
@@ -32,7 +28,7 @@ export default ({ address, borderColor }) => {
           size={theme.qrCode.size}
         />
       ) : (
-        <Link to={paths.deploy}>Deploy a new contract</Link>
+        <p>Deploy a new contract</p>
       )}
     </SContainer>
   );

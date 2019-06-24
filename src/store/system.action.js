@@ -1,4 +1,5 @@
 import { Web3Service } from 'services';
+import { setAuth } from './auth.action';
 
 let WEB3_INITIALISED = false;
 
@@ -34,22 +35,6 @@ function setService(service) {
     dispatch({
       type: 'SYSTEM_INIT_WEB3',
       payload: { web3Service: service },
-    });
-  };
-}
-
-function setAuth(service) {
-  return async dispatch => {
-    const signer = await service.getSigner();
-    const networkName = await service.getNetwork();
-    const address = await signer.getAddress();
-
-    dispatch({
-      type: 'AUTH_SUCCESS',
-      payload: {
-        userAccount: address,
-        networkName,
-      },
     });
   };
 }

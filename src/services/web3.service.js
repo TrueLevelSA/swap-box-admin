@@ -12,7 +12,6 @@ export default class Web3Service {
   async init(web3) {
     if (web3 !== undefined) {
       this.provider = new ethers.providers.Web3Provider(web3.currentProvider);
-
       try {
         await this.provider._web3Provider.enable();
         this.signer = this.provider.getSigner();
@@ -23,10 +22,6 @@ export default class Web3Service {
     } else {
       console.debug('web3 is undefined');
     }
-  }
-
-  authenticate() {
-    return this.provider._web3Provider.enable();
   }
 
   async getNetwork() {
