@@ -84,6 +84,7 @@ export function deployContract() {
         type: 'SET_CONTRACT_ADDRESS',
         payload: { hasContract: true, contractAddress: deployed.address },
       });
+      console.debug('Deploy success');
     } catch (err) {
       throw new Error(err);
     }

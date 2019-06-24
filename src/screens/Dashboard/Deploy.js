@@ -1,50 +1,49 @@
-import React, { useState } from 'react'
-import { Redirect } from 'react-router-dom'
-import { Box, Heading, Paragraph } from 'grommet'
-import { connect } from 'react-redux'
+import React from 'react';
+import { Redirect } from 'react-router-dom';
+import { Box, Heading, Paragraph } from 'grommet';
+import { connect } from 'react-redux';
 
-import { Button } from 'components'
-import { deployContract } from 'store'
+import { Button } from 'components';
+import { deployContract } from 'store';
 
-function Deploy({ deploy, authenticated }) {
-  const [toAdmin, setToAdmin] = useState(false)
+function Deploy({ hasContract, deployContract }) {
+  const deploy = async () => {
+    await deployContract();
+  };
 
-  const deployContract = async () => {
-    await deploy()
-    setToAdmin(true)
-  }
-
-  if (toAdmin) {
-    return <Redirect to="/dashboard/admin" />
+  if (hasContract) {
+    return <Redirect to="/dashboard/admin" />;
   }
 
   return (
     <Box fill align="center" justify="center">
       <Box direction="column" align="center">
-        <Heading level="3">
-          Deploy Contract
-        </Heading>
+        <Heading level="3">Deploy Contract</Heading>
         <Paragraph textAlign="center">
-          This address doesn't own a contract yet.
-          Please select a Metamask account with an existing contract
-          or deploy a new one.
+          This address doesn't own a contract yet. Please select a Metamask
+          account with an existing contract or deploy a new one.
         </Paragraph>
         <Button
           size="small"
           margin={{ vertical: 'medium' }}
           label="Create Contract"
-          onClick={deployContract}
-          primary />
+          onClick={deploy}
+          primary
+        />
       </Box>
     </Box>
-  )
+  );
 }
 
+const mapStateToProps = ({ data }) => ({
+  hasContract: data.hasContract,
+});
+
 const mapDispatchToProps = dispatch => ({
-  deploy: () => dispatch(deployContract()),
-})
+  deployContract: () => dispatch(deployContract()),
+});
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
-)(Deploy)
+)(Deploy);

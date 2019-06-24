@@ -9,7 +9,7 @@ import { initContract } from 'store';
 
 class Dashboard extends Component {
   async componentDidMount() {
-    await initContract();
+    await this.props.contractInit();
   }
 
   render() {

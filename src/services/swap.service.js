@@ -15,7 +15,7 @@ class SwapService {
       this.account = null;
       this.factory = null;
       this.service = null;
-      this.chain = settings.chain['ropsten']; // @TODO should be networkName
+      this.chain = null;
 
       // ES6 Singleton pattern
       // By adding the extra step of holding a reference to the instance,
@@ -29,6 +29,7 @@ class SwapService {
   async init(signer, account, networkName, web3Service) {
     this.account = account;
     this.service = web3Service;
+    this.chain = settings.chain[networkName] || settings.chain['localhost']; // @TODO check if valid network
     this.factory = new ethers.ContractFactory(
       source.abi,
       source.bytecode
@@ -71,7 +72,7 @@ class SwapService {
       const history = await this.service.getHistory(this.account, from, latest);
 
       return history.filter(tx => tx.creates !== null); // Only contract creations
-      // @TODO IMPORTANT bytecode comparision fails.
+      // @TODO: IMPORTANT bytecode comparision fails.
       // So we deactivate for dev purpuses knowing that our test getAccount //
       // is used only for this project. Find a solution before deploying
       // .filter(tx => tx.data === bytecode.latest)     // That correspond to Atola
@@ -112,7 +113,7 @@ class SwapService {
         baseExchange
       );
     } catch (e) {
-      throw new Error(e);
+      console.debug('[SwapService] deploy() error', e);
     } finally {
       return this;
     }
